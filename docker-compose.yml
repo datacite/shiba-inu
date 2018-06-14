@@ -1,0 +1,56 @@
+version: '2.1'
+
+services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - ./vendor/docker/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: -Xmx256m -Xms256m
+      ELASTIC_PASSWORD: changeme
+    networks:
+      - elk
+    healthcheck:
+      test: curl -f http://elastic:changeme@elasticsearch:9200
+      interval: 10s
+      timeout: 1s
+
+  logstash:
+    env_file: .env
+    image: datacite/shiba-inu
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./logstash/tmp:/usr/share/logstash/tmp
+      - ./logstash/patterns:/usr/share/logstash/patterns
+      - ./logstash/plugins:/usr/share/logstash/plugins
+    ports:
+      - "5000:5000"
+    environment:
+      LS_JAVA_OPTS: -Xmx256m -Xms256m
+      XPACK_MONITORING_ENABLED: "true"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.2.4
+    volumes:
+      - ./vendor/docker/:/usr/share/kibana/config:ro
+    ports:
+      - "5601:5601"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+networks:
+
+  elk:
+    driver: bridge
