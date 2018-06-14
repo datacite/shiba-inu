@@ -6,7 +6,7 @@
 Shiba-Inu is pipeline for DOI Resolution Logs processing. The pipeline processes DOI resolution logs following the [Code of practice for research data usage metrics](https://doi.org/10.7287/peerj.preprints.26505v1). Its based in Logstash.
 
 
-![The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.]("http://i.dailymail.co.uk/i/pix/2014/07/02/1404315035597_wps_7_PIC_BY_SHINJIRO_ONO_CATER.jpg")
+![The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.](https://i.imgur.com/ueW0Leo.jpg)
 
 
 ## Installation
