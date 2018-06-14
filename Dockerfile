@@ -7,6 +7,8 @@ WORKDIR /usr/share/logstash
 RUN rm -f /usr/share/logstash/pipeline/logstash.conf
 RUN rm -f /usr/share/logstash/config/logstash.yml
 
+RUN ./bin/logstash-plugin install logstash-filter-rest
+
 COPY logstash/pipeline/ /usr/share/logstash/pipeline/
 COPY logstash/config/ /usr/share/logstash/config/
 
