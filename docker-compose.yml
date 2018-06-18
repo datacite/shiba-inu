@@ -25,10 +25,11 @@ services:
     image: datacite/shiba-inu
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
-      - ./logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./logstash/pipeline/:/usr/share/logstash/pipeline/
       - ./logstash/tmp:/usr/share/logstash/tmp
       - ./logstash/patterns:/usr/share/logstash/patterns
       - ./logstash/plugins:/usr/share/logstash/plugins
+      - ./spec:/usr/share/logstash/spec
     ports:
       - "5000:5000"
     environment:
@@ -39,16 +40,16 @@ services:
     depends_on:
       - elasticsearch
 
-  kibana:
-    image: docker.elastic.co/kibana/kibana:6.2.4
-    volumes:
-      - ./vendor/docker/:/usr/share/kibana/config:ro
-    ports:
-      - "5601:5601"
-    networks:
-      - elk
-    depends_on:
-      - elasticsearch
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:6.2.4
+  #   volumes:
+  #     - ./vendor/docker/:/usr/share/kibana/config:ro
+  #   ports:
+  #     - "5601:5601"
+  #   networks:
+  #     - elk
+  #   depends_on:
+  #     - elasticsearch
 
 networks:
 
