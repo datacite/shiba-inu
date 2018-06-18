@@ -1,0 +1,68 @@
+language: ruby
+rvm:
+- 2.4.1
+sudo: required
+
+services:
+  - docker
+  - memcached
+
+addons:
+  code_climate:
+    repo_token: $CODECLIMATE_REPO_TOKEN
+
+install:
+  - travis_retry bundle install
+
+before_script:
+  - memcached -p 11211 &
+  - cp .env.travis .env
+  - mkdir -p tmp/pids
+  - mkdir -p log
+
+script:
+  - bundle exec rspec
+  - bundle exec codeclimate-test-reporter
+
+after_success:
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+  - REPO=datacite/shiba-inu;
+  - AUTO_DEPLOY=false;
+  - if [ "${TRAVIS_TAG?}" ]; then
+      docker build -f Dockerfile -t $REPO:$TRAVIS_TAG .;
+      docker push $REPO:$TRAVIS_TAG;
+      echo "Pushed to" $REPO:$TRAVIS_TAG;
+      AUTO_DEPLOY=true;
+    elif [ "$TRAVIS_BRANCH" == "master" ]; then
+      docker build -f Dockerfile -t $REPO .;
+      docker push $REPO;
+      echo "Pushed to" $REPO;
+      AUTO_DEPLOY=true;
+    else
+      docker build -f Dockerfile -t $REPO:$TRAVIS_BRANCH .;
+      docker push $REPO:$TRAVIS_BRANCH;
+      echo "Pushed to" $REPO:$TRAVIS_BRANCH;
+    fi
+
+  - if [ "$AUTO_DEPLOY" == "true" ]; then
+      wget https://github.com/jwilder/dockerize/releases/download/v0.6.0/dockerize-linux-amd64-v0.6.0.tar.gz;
+      tar -xzvf dockerize-linux-amd64-v0.6.0.tar.gz;
+      rm dockerize-linux-amd64-v0.6.0.tar.gz;
+      export GIT_SHA=$(git rev-parse --short HEAD);
+      export GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1));
+      git clone "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/${TERRAFORM_REPO}.git";
+      ./dockerize -template vendor/docker/shiba-inu.auto.tfvars.tmpl:${TERRAFORM_REPO}/stage/services/metrics-api/shiba-inu.auto.tfvars;
+      ./dockerize -template vendor/docker/shiba-inu.auto.tfvars.tmpl:${TERRAFORM_REPO}/prod-eu-west/services/metrics-api/shiba-inu.auto.tfvars;
+      cd ${TERRAFORM_REPO};
+      git remote;
+      git config user.email ${DOCKER_EMAIL};
+      git config user.name ${DOCKER_USERNAME};
+      git add stage/services/metrics-api/shiba-inu.auto.tfvars;
+      git add prod-eu-west/services/metrics-api/shiba-inu.auto.tfvars;
+      git commit -m "Adding shiba-inu git variables for latest commit";
+      git push "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/${TERRAFORM_REPO}.git" master;
+    fi
+
+notifications:
+  slack: datacite:Wt8En0ALoTA6Kjc5EOKNDWxN
+  email: false
