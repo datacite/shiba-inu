@@ -15,11 +15,14 @@ COPY logstash/config/ /usr/share/logstash/config/
 
 RUN mkdir patterns && \
     mkdir plugins && \
-    mkdir spec
+    mkdir spec && \
+    cp logstash-core/versions-gem-copy.yml logstash-core-plugin-api/
 
 COPY logstash/patterns/ ./patterns/
 COPY logstash/plugins/ ./plugins/ 
 COPY spec/ ./spec/
+
+RUN ruby -S gem update --system 
 
 CMD ["logstash", "-f", "/usr/share/logstash/pipeline"]
 
