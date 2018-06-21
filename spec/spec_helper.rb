@@ -13,6 +13,7 @@ if ENV['COVERAGE']
   end
 end
 
+
 require "logstash-core"
 require "logstash/logging"
 require "logstash/environment"
@@ -20,7 +21,6 @@ require "logstash/devutils/rspec/logstash_helpers"
 require "logstash/devutils/rspec/shared_examples"
 require "insist"
 require 'logstash/plugin'
-# require 'logstash/filters/grok'
 require 'logstash/filters/rest'
 
 
