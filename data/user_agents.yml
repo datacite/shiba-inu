@@ -33,6 +33,9 @@ URL2File: machine
 urllib: machine
 Wget: machine
 wordpress: machine
+Maremma: machine
+^(R \([0-9]\.[0-9]): machine
+x86_64 linux-gnu: machine
 ^integrity\\/\\d: robot
 ^LinkParser\\/: robot
 ^LinkSaver\\/: robot
@@ -253,6 +256,7 @@ yahoo: robot
 yandex: robot
 zeus: robot
 zyborg: robot
+Amazon Route 53 Health Check Service: robot
 ^.?$: unclassified
 ^@ozilla\\/\\d: unclassified
 ^Array$: unclassified
@@ -294,3 +298,6 @@ Microsoft: unclassified
 Microsoft-WebDAV-MiniRedir: unclassified
 okhttp: unclassified
 rambler: unclassified
+Mozilla: regular
+Chrome: regular
+Safari: regular
