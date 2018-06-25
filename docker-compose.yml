@@ -24,11 +24,12 @@ services:
     env_file: .env
     image: datacite/shiba-inu
     volumes:
-      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
-      - ./logstash/pipeline/:/usr/share/logstash/pipeline/
-      - ./logstash/tmp:/usr/share/logstash/tmp
-      - ./logstash/patterns:/usr/share/logstash/patterns
-      - ./logstash/plugins:/usr/share/logstash/plugins
+      - ./config/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./pipeline/:/usr/share/logstash/pipeline/
+      - ./tmp:/usr/share/logstash/tmp/
+      - ./patterns:/usr/share/logstash/patterns/
+      - ./plugins:/usr/share/logstash/plugins/
+      - ./data:/usr/share/logstash/data/
       - ./spec:/usr/share/logstash/spec
     ports:
       - "5000:5000"

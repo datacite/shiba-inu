@@ -12,9 +12,9 @@ describe "Cleaning" do
 
   context "Filters outs events without " do
 
-    message = {'occured_at' => '2018-04-02 00:09:39.43Z', 'doi' => '', 'tags' => ['UA']}
-    message_2 = {'occured_at' => '', 'doi' => '10.2323/fjhds3', 'tags' => ['UA']}
-    message_3 = {'occured_at' => '2018-04-02 00:09:39.43Z', 'doi' => '10.2323/fjhds3', 'tags' => ['HOLA']}
+    message = {'occured_at' => '2018-04-02 00:09:39.43Z', 'doi' => '', 'user_agent' => "dsdsdsdsd"}
+    message_2 = {'occured_at' => '', 'doi' => '10.2323/fjhds3', 'user_agent' => "dsdsdsdsd"}
+    message_3 = {'occured_at' => '2018-04-02 00:09:39.43Z', 'doi' => '10.2323/fjhds3', 'user_agent' => ""}
 
     describe "DOIs" do
       sample(message) do 
@@ -52,7 +52,7 @@ describe "Cleaning" do
 
     describe "user agent" do
       sample(message) do 
-        expect(subject.get('tags')).to include('UA')
+        expect(subject.get('user_agent')).to eq("dsdsdsdsd")
       end
     end
   end

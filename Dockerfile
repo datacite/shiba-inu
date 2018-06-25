@@ -10,17 +10,22 @@ RUN rm -f /usr/share/logstash/pipeline/logstash.conf && \
 RUN ./bin/logstash-plugin install logstash-filter-rest && \
     ./bin/logstash-plugin install --development
 
-COPY logstash/pipeline/*.conf .pipeline/
-COPY logstash/config/ /usr/share/logstash/config/
+# COPY pipeline/*.conf .pipeline/
+# COPY config/ /usr/share/logstash/config/
 
-RUN mkdir patterns && \
-    mkdir plugins && \
-    mkdir spec && \
-    cp logstash-core/versions-gem-copy.yml logstash-core-plugin-api/
+# RUN mkdir patterns && \
+#     mkdir plugins && \
+#     mkdir spec && \
+#     cp logstash-core/versions-gem-copy.yml logstash-core-plugin-api/
 
-COPY logstash/patterns/ ./patterns/
-COPY logstash/plugins/ ./plugins/ 
-COPY spec/ ./spec/
+COPY . /usr/share/logstash
+
+RUN cp logstash-core/versions-gem-copy.yml logstash-core-plugin-api/
+
+# COPY patterns/ ./patterns/
+# COPY data/ ./data/
+# COPY plugins/ ./plugins/ 
+# COPY spec/ ./spec/
 
 RUN ruby -S gem update --system 
 

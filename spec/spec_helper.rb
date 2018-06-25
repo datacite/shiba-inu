@@ -21,6 +21,7 @@ require "logstash/devutils/rspec/logstash_helpers"
 require "logstash/devutils/rspec/shared_examples"
 require "insist"
 require 'logstash/plugin'
+require "logstash/filters/aggregate"
 require 'logstash/filters/rest'
 
 
