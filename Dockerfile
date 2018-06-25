@@ -8,6 +8,7 @@ RUN rm -f /usr/share/logstash/pipeline/logstash.conf && \
     rm -f /usr/share/logstash/config/logstash.yml
 
 RUN ./bin/logstash-plugin install logstash-filter-rest && \
+    ./bin/logstash-plugin install logstash-filter-prune && \
     ./bin/logstash-plugin install --development
 
 # COPY pipeline/*.conf .pipeline/
@@ -27,7 +28,8 @@ RUN cp logstash-core/versions-gem-copy.yml logstash-core-plugin-api/
 # COPY plugins/ ./plugins/ 
 # COPY spec/ ./spec/
 
-RUN ruby -S gem update --system 
+RUN chmod -R 755 /usr/share/logstash && \
+    ruby -S gem update --system 
 
 CMD ["logstash", "-f", "/usr/share/logstash/pipeline"]
 
