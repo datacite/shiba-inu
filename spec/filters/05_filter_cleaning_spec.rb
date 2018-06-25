@@ -3,7 +3,7 @@ require "spec_helper"
 
 # Load the configuration file
 @@configuration = String.new
-@@configuration << File.read("./pipeline/05_filter_cleaning.conf")
+@@configuration << File.open("./pipeline/05_filter_cleaning.conf","rb").read
 
 
 describe "Cleaning" do

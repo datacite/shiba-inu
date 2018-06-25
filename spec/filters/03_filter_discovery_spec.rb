@@ -1,27 +1,27 @@
 # encoding: utf-8
-require "spec_helper.rb"
+require "spec_helper"
 
-module LogStash::Environment
-  # running the grok code outside a logstash package means
-  # LOGSTASH_HOME will not be defined, so let's set it here
-  # before requiring the grok filter
-  unless self.const_defined?(:LOGSTASH_HOME)
-    LOGSTASH_HOME = File.expand_path("../../../", __FILE__)
-  end
+# module LogStash::Environment
+#   # running the grok code outside a logstash package means
+#   # LOGSTASH_HOME will not be defined, so let's set it here
+#   # before requiring the grok filter
+#   unless self.const_defined?(:LOGSTASH_HOME)
+#     LOGSTASH_HOME = File.expand_path("../../../", __FILE__)
+#   end
 
-  # also :pattern_path method must exist so we define it too
-  unless self.method_defined?(:pattern_path)
-    def pattern_path(path)
-      ::File.join(LOGSTASH_HOME, "patterns", path)
-    end
-  end
-end
+#   # also :pattern_path method must exist so we define it too
+#   unless self.method_defined?(:pattern_path)
+#     def pattern_path(path)
+#       ::File.join(LOGSTASH_HOME, "patterns", path)
+#     end
+#   end
+# end
 
-require "logstash/filters/grok"
+# require "logstash/filters/grok"
 
-describe LogStash::Filters::Grok do
+# describe LogStash::Filters::Grok do
 
-
+require "logstash/devutils/rspec/spec_helper"
 
 # Load the configuration file
 puts "slasas"
@@ -32,7 +32,7 @@ puts "slasas"
 describe "structuring with user agent" do
 
   # config(@@configuration)
-  let(:config) { File.read("./pipeline/03_filter_discovery.conf") }
+  let(:config) { File.open("./pipeline/03_filter_discovery.conf","rb").read }
   
 
   # Inject input event/message into the pipeline
@@ -50,10 +50,9 @@ describe "structuring with user agent" do
     # reject { subject.get("tags").include?("_dateparsefailure") }
 
     # expect(subject).to include('rest')
-    puts subject
+    puts subject.get("doi")
     # expect(subject.get('[rest][0]')).to include('userId')
     # expect(subject.get('[rest][0][userId]')).to eq(10)
     # expect(subject.get('rest')).to_not include('fallback')
   end
-end
 end
