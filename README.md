@@ -13,13 +13,16 @@ Shiba-Inu is pipeline for DOI Resolution Logs processing. The pipeline processes
 
 ## Installation
 
-Using Docker.
+Using Docker. 
 
 ```
-docker run -p 8075:80 datacite/shiba-inu
+docker run -p 8090:9200 datacite/shiba-inu
 ```
 
-You can now point your browser to `http://localhost:8075` and use the application.
+
+You can add logfiles in `/tmp` folder.
+
+You can now point your browser to `http://localhost:8090` and view the pipeline results.
 
 
 ## Development

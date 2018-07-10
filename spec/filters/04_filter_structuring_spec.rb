@@ -3,7 +3,7 @@ require "spec_helper"
 
 # Load the configuration file
 @@configuration = String.new
-@@configuration << File.read("./pipeline/04_filter_structuring.conf")
+@@configuration << File.open("./pipeline/04_filter_structuring.conf","rb").read
 
 
 describe "Structuring" do
