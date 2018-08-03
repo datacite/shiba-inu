@@ -24,7 +24,6 @@ require "spec_helper"
 require "logstash/devutils/rspec/spec_helper"
 
 # Load the configuration file
-puts "slasas"
 # @@configuration = String.new
 # @@configuration << File.read("./pipeline/08_filter_enriching.conf")
 
