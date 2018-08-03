@@ -25,6 +25,36 @@ You can add logfiles in `/tmp` folder.
 You can now point your browser to `http://localhost:8090` and view the pipeline results.
 
 
+# Investigations Event
+
+Example of a single event log line (rendered on multiple lines for readability)::
+
+```json
+
+{
+  "_index": "investigations",
+  "_type": "doc",
+  "_id": "TdGm_GQBLdfEo9SEabqh",
+  "_score": 1.0,
+  "_source": {
+    "doi": "10.5063/f1t151vr",                     // DOI name
+    "unique-investigations": 5,                   // Number of Unique investigations for the reporting period
+    "doi_metadata": {                             // Minimal DOI metadata
+      "published": 2018,
+      "publisher": "KNB Data Repository",
+      "resource-type": "dataset",
+      "title": "EVOS data archiving project results: data, code and output (2016)",
+      "client-id": "CDL.NCEAS"
+    },                           
+    "timestamp": "2018-08-02T21:58:12.713Z",      // Aggregation Timestamp
+    "access-method": "machine",                   // access method of the aggregation
+    "reporting-period": "2018-04",                // Reporting period
+    "country_code": "AT"                          // Country code (optional)
+  }
+}
+
+```
+
 ## Development
 
 We use Rspec for unit and acceptance testing:
