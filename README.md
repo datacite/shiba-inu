@@ -30,7 +30,7 @@ You can now point your browser to `http://localhost:8090` and view the pipeline 
 We use Rspec for unit and acceptance testing:
 
 ```
-bundle exec rspec
+ruby -S bundle exec rspec
 ```
 
 Follow along via [Github Issues](https://github.com/datacite/shiba-inu/issues).
