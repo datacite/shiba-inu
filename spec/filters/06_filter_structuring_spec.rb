@@ -15,7 +15,7 @@ describe "Structuring" do
       message = {"user_agent" => "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"}
       sample(message) do 
         expect(subject.get('access-method')).to eq('regular')
-        expect(subject.get('tags')).to include('UA')
+        expect(subject.get('tags')).to include('_ua')
       end
     end
 
@@ -41,7 +41,7 @@ describe "Structuring" do
       message = {"user_agent" => "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"}
       sample(message) do 
         expect(subject.get('access-method')).to eq('regular')
-        expect(subject.get('tags')).to include('UA')
+        expect(subject.get('tags')).to include('_ua')
       end
     end
 
@@ -55,7 +55,7 @@ describe "Structuring" do
     # describe "fails user agent trasnformation" do
     #   sample(message) do 
     #     expect(subject.get('access-method')).to eq('regular')
-    #     expect(subject.get('tags')).to include('UA')
+    #     expect(subject.get('tags')).to include('_ua')
     #   end
     # end
 

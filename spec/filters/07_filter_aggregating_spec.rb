@@ -17,17 +17,17 @@ describe "Aggregating" do
     message = [
       { 'occured_at' => '2018-04-02 00:09:39.543Z', 
         'doi' => '10.2323/fjhds3', 
-        'tags' => ['UA'],
+        'tags' => ['_ua'],
         '@metadata' => {'unique_usage' => 'defd4334f'}
       },
       { 'occured_at' => '2018-04-03 00:09:39.543Z', 
         'doi' => '10.2323/fjhds3', 
-        'tags' => ['UA'],
+        'tags' => ['_ua'],
         '@metadata' => {'unique_usage' => 'defd4334f'}
       },
       { 'occured_at' => '2018-04-04 00:09:39.543Z', 
         'doi' => '10.2323/fjhds3', 
-        'tags' => ['UA'],
+        'tags' => ['_ua'],
         '@metadata' => {'unique_usage' => 'defd4334f'}
       }    
     ]
@@ -44,7 +44,7 @@ describe "Aggregating" do
 
   context "events by DOI" do
 
-    # message = {'occured_at' => '2018-04-02 00:09:39.543Z', 'doi' => '10.2323/fjhds3', 'tags' => ['UA']}
+    # message = {'occured_at' => '2018-04-02 00:09:39.543Z', 'doi' => '10.2323/fjhds3', 'tags' => ['_ua']}
 
     # # messages = [message,message,message]
 
@@ -64,7 +64,7 @@ describe "Aggregating" do
 
     # describe "user agent" do
     #   sample(message) do 
-    #     expect(subject.get('tags')).to include('UA')
+    #     expect(subject.get('tags')).to include('_ua')
     #   end
     # end
   end

@@ -36,7 +36,7 @@ describe "Cleaning" do
 
   context "Does not Filters events with" do
 
-    message = {'occured_at' => '2018-04-02 00:09:39.543Z', 'doi' => '10.2323/fjhds3', 'tags' => ['UA']}
+    message = {'occured_at' => '2018-04-02 00:09:39.543Z', 'doi' => '10.2323/fjhds3', 'tags' => ['_ua']}
 
     describe "timestamp" do
       sample(message) do 
