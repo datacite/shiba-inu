@@ -31,10 +31,11 @@ services:
       - ./plugins:/usr/share/logstash/plugins/
       - ./data:/usr/share/logstash/data/
       - ./spec:/usr/share/logstash/spec
+      - ./filters:/usr/share/logstash/filters
     ports:
       - "5000:5000"
     environment:
-      LS_JAVA_OPTS: -Xmx256m -Xms256m
+      LS_JAVA_OPTS: -Xmx512m -Xms512m
       XPACK_MONITORING_ENABLED: "true"
     networks:
       - elk

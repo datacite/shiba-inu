@@ -28,4 +28,8 @@ COPY . /usr/share/logstash
 RUN cp logstash-core/versions-gem-copy.yml logstash-core-plugin-api/ && \
     export PATH=$PATH:/usr/share/logstash/vendor/bundle/jruby/2.3.0/bin
 
+# RUN /usr/share/logstash/bin/logstash-plugin update
+
+# ENV PATH="${PATH}:/usr/share/logstash/vendor/bundle/jruby/2.3.0/bin"
+
 CMD ["logstash", "-f", "/usr/share/logstash/pipeline"]

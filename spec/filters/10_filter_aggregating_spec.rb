@@ -6,7 +6,7 @@ require "logstash/filters/aggregate"
 
 # Load the configuration file
 @@configuration = String.new
-@@configuration << File.open("./pipeline/07_filter_aggregating.conf","rb").read
+@@configuration << File.open("./pipeline/10_filter_aggregating.conf","rb").read
 
 describe "Aggregating" do
   let(:config) { @@configuration }

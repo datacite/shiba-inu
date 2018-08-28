@@ -1,19 +1,23 @@
 # encoding: utf-8
 require "spec_helper"
+require "support/rest_spec_helper"
 
 # Load the configuration file
 @@configuration = String.new
-@@configuration << File.read("./pipeline/08_filter_enriching.conf")
+@@configuration << File.read("./pipeline/15_filter_enriching.conf")
 
 
 describe "Enriching" do
   let(:config) { @@configuration }
 
-  describe "added DataCite Metadata" do
-    sample('doi' => '10.5438/0000-00SS') do 
-      expect("#{subject.get('@timestamp')}").to eq('2018-04-02T00:09:39.543Z')
-      expect(subject.get('tags')).to_not include('_dateparsefailure')
-      expect(subject.get('tags')).to include('dated')
+  context "When existing DOI" do
+    message = {'doi' => '10.5438/0000-00SS', 'tags' => ['_aggregatetimeout']}
+    describe "added DataCite Metadata" do
+      sample(message) do 
+        expect("#{subject.get('title')}").to eq('chacha')
+        expect(subject.get('tags')).to_not include('_dateparsefailure')
+        expect(subject.get('tags')).to include('dated')
+      end
     end
   end
 
