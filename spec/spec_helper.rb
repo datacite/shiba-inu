@@ -1,5 +1,19 @@
 # require "/usr/share/logstash/vendor/bundle/jruby/2.3.0/gems/logstash-devutils-1.3.5-java/lib/logstash/devutils/rspec/spec_helper"
-require 'logstash/devutils/rspec/spec_helper'
+# require 'logstash/devutils/rspec/spec_helper'
+
+
+require 'support/logs_spec_helper'
+
+RSPEC_ROOT = File.dirname __FILE__
+
+Dir[RSPEC_ROOT + 'support/**/*.rb'].each { |f| require f }
+
+
+def fixture_path
+  File.expand_path("../fixtures", __FILE__) + '/'
+end
+
+
 
 # if ENV['COVERAGE']
 #   require 'simplecov'
