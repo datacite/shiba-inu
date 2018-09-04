@@ -20,9 +20,9 @@ def filter(event)
   # query = "#{API_URL}/works/#{event[:doi]}"
   # json = Maremma.get(query).body.dig("data")
   # return "" unless json.respond_to?("dig")
-  puts json.body.class
+  # puts json.body.class
   data = eval(json.body)
-  puts data.class
+  # puts data.class
 
   attributes = data["data"]["attributes"]
   enriched = { 

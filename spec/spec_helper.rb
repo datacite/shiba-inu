@@ -1,7 +1,7 @@
 # require "/usr/share/logstash/vendor/bundle/jruby/2.3.0/gems/logstash-devutils-1.3.5-java/lib/logstash/devutils/rspec/spec_helper"
 # require 'logstash/devutils/rspec/spec_helper'
 
-
+require 'pp'
 require 'support/logs_spec_helper'
 
 RSPEC_ROOT = File.dirname __FILE__

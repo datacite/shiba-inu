@@ -7,7 +7,6 @@ describe "Discovery filter" do
   context "grokking single message" do
     it "has attirbutes" do
       message = response.sample
-      puts message
       expect(message["message"]).not_to be_empty
       expect(message["user_agent"]).not_to be_empty
       expect(message["doi"]).to match(/10\.\d{4,5}\/\S+/)
