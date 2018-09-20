@@ -10,7 +10,7 @@ describe "Double click filter for sample" do
       # pp message
       expect(message["message"]).not_to be_empty
       expect(message["doi"]).to match(/10\.\d{4,5}\/\S+/)
-      expect(message["occured_at"]).not_to be_empty
+      expect(message["occurred_at"]).not_to be_empty
       expect(message["clientip"]).not_to be_empty
       expect(message["hour"].to_i).to be_kind_of(Numeric)
       expect(message["session"]).not_to be_empty
@@ -59,7 +59,7 @@ describe "Double click filter for long response" do
       # pp message
       expect(message["message"]).not_to be_empty
       expect(message["doi"]).to match(/10\.\d{4,5}\/\S+/)
-      expect(message["occured_at"]).not_to be_empty
+      expect(message["occurred_at"]).not_to be_empty
       expect(message["clientip"]).not_to be_empty
       expect(message["hour"].to_i).to be_kind_of(Numeric)
       expect(message["session"]).not_to be_empty
