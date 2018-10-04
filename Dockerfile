@@ -1,4 +1,4 @@
-FROM docker.elastic.co/logstash/logstash:6.2.4
+FROM docker.elastic.co/logstash/logstash:6.4.0
 LABEL maintainer="kj.garza@gmail.com"
 
 
@@ -28,8 +28,5 @@ COPY . /usr/share/logstash
 RUN cp logstash-core/versions-gem-copy.yml logstash-core-plugin-api/ && \
     export PATH=$PATH:/usr/share/logstash/vendor/bundle/jruby/2.3.0/bin
 
-# RUN /usr/share/logstash/bin/logstash-plugin update
-
-# ENV PATH="${PATH}:/usr/share/logstash/vendor/bundle/jruby/2.3.0/bin"
-
-CMD ["logstash", "-f", "/usr/share/logstash/pipeline"]
+RUN cp vendor/docker/Gemfile /usr/share/logstash/Gemfile
+RUN ./bin/logstash-plugin install --no-verify
