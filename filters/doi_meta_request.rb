@@ -44,20 +44,55 @@ def filter(event)
     data = JSON.parse(json.body)
     attributes = data["data"]["attributes"]
     { 
-      unique_counts_regular: dataset[:unique_counts_regular],
-      unique_counts_machine: dataset[:unique_counts_machine],
-      total_counts_regular: dataset[:total_counts_regular],
-      total_counts_machine: dataset[:total_counts_machine],
-      dataset_id: attributes["doi"],
+      performance: [{
+        period: {
+          begin_date: "",
+          end_date: "",
+        },
+        instance:[
+          {
+            count: dataset[:total_counts_regular],
+            access_method: "regular",
+            metric_type: "total_dataset_investigations"
+          },
+          {
+            count: dataset[:unique_counts_regular],
+            access_method: "regular",
+            metric_type: "unique_dataset_investigations"
+          },
+          {
+            count: dataset[:unique_counts_machine],
+            access_method: "machine",
+            metric_type: "unique_dataset_investigations"
+          },
+          {
+            count: dataset[:total_counts_machine],
+            access_method: "machine",
+            metric_type: "total_dataset_investigations"
+          },
+        ]
+      }],
+      dataset_id: {type: "doi", value: attributes["doi"]},
       data_type: attributes["resource-type-id"],
       yop: attributes["published"],
-      uri: attributes["identifier"],
+      uri: attributes["url"],
       publisher: attributes["container-title"],
       dataset_title: attributes["title"],
-      publisher_id: attributes["data-center-id"],
-      dataset_contributors: attributes["author"],
+      publisher_id: [{
+        type: "grid",
+        value: attributes["data-center-id"]
+      }],
+      dataset_dates: [{
+        type: "pub-date",
+        value: attributes["published"]
+      }],
+      dataset_contributors: attributes["author"].map { |a| { type: "name", value: a["given"]+" "+a["family"] } },
       tags:["_dc_meta"]
-    }
+      # unique_counts_regular: dataset[:unique_counts_regular],
+      # unique_counts_machine: dataset[:unique_counts_machine],
+      # total_counts_regular: dataset[:total_counts_regular],
+      # total_counts_machine: dataset[:total_counts_machine],
+    }.transform_keys!{ |key| key.to_s.dasherize }
   end
 
   arr.map! do |instance|
