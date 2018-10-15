@@ -36,7 +36,7 @@ def filter(event)
   logger = Logger.new(STDOUT)
   
   arr = dois.map do |dataset| 
-    puts dataset
+    logger.info dataset
     doi = dataset[:doi]
     json = conn.get "/works/#{doi}"
     next unless json.success?
@@ -44,6 +44,22 @@ def filter(event)
     data = JSON.parse(json.body)
     attributes = data["data"]["attributes"]
     { 
+      dataset_id: {type: "doi", value: attributes["doi"]},
+      data_type: attributes["resource-type-id"],
+      yop: attributes["published"],
+      uri: attributes["url"],
+      publisher: attributes["container-title"],
+      dataset_title: attributes["title"],
+      publisher_id: [{
+        type: "grid",
+        value: attributes["data-center-id"]
+      }],
+      dataset_dates: [{
+        type: "pub-date",
+        value: attributes["published"]
+      }],
+      dataset_contributors: attributes["author"].map { |a| get_authors(a) },
+      tags:["_dc_meta"],
       performance: [{
         period: {
           begin_date: "",
@@ -71,28 +87,13 @@ def filter(event)
             metric_type: "total_dataset_investigations"
           },
         ]
-      }],
-      dataset_id: {type: "doi", value: attributes["doi"]},
-      data_type: attributes["resource-type-id"],
-      yop: attributes["published"],
-      uri: attributes["url"],
-      publisher: attributes["container-title"],
-      dataset_title: attributes["title"],
-      publisher_id: [{
-        type: "grid",
-        value: attributes["data-center-id"]
-      }],
-      dataset_dates: [{
-        type: "pub-date",
-        value: attributes["published"]
-      }],
-      dataset_contributors: attributes["author"].map { |a| { type: "name", value: a["given"]+" "+a["family"] } },
-      tags:["_dc_meta"]
+      }]
       # unique_counts_regular: dataset[:unique_counts_regular],
       # unique_counts_machine: dataset[:unique_counts_machine],
       # total_counts_regular: dataset[:total_counts_regular],
       # total_counts_machine: dataset[:total_counts_machine],
-    }.transform_keys!{ |key| key.to_s.dasherize }
+    }
+    #.transform_keys!{ |key| key.to_s.dasherize }
   end
 
   arr.map! do |instance|
@@ -100,4 +101,18 @@ def filter(event)
   end
 
   arr
+end
+
+
+def get_authors author
+  if (author.key?("given") || author.key?("family"))
+    { type: "name",
+      value: author["given"]+" "+author["family"] }
+    elsif author.key?("literal")
+      { type: "name",
+        value: author["literal"] }
+    else 
+      { type: "name",
+        value: "" }
+  end
 end
