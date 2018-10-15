@@ -11,6 +11,7 @@ describe "Discovery filter" do
       expect(message["user_agent"]).not_to be_empty
       expect(message["doi"]).to match(/10\.\d{4,5}\/\S+/)
       expect(message["occurred_at"]).not_to be_empty
+      expect(message["resp_code"]).not_to be_empty
       expect(message["clientip"]).not_to be_empty
       expect(message["hour"].to_i).to be_kind_of(Numeric)
       expect(message["logdate"]).not_to be_empty
@@ -19,6 +20,11 @@ describe "Discovery filter" do
     it "has tags" do
       message = response.sample
       expect(message["tags"]).to include("_groked")
+    end
+
+    it "reponse codes" do
+      message = response.sample
+      expect(message["resp_code"]).not_to eq("100").or eq("2")
     end
 
     it "has logdate" do
