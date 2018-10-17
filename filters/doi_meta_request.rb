@@ -44,47 +44,48 @@ def filter(event)
     data = JSON.parse(json.body)
     attributes = data["data"]["attributes"]
     { 
-      dataset_id: {type: "doi", value: attributes["doi"]},
-      data_type: attributes["resource-type-id"],
+      "dataset-id": [{type: "doi", value: attributes["doi"]}],
+      "data-type": attributes["resource-type-id"],
       yop: attributes["published"],
       uri: attributes["url"],
       publisher: attributes["container-title"],
-      dataset_title: attributes["title"],
-      publisher_id: [{
+      "dataset-title": attributes["title"],
+      "publisher-id": [{
         type: "grid",
         value: attributes["data-center-id"]
       }],
-      dataset_dates: [{
+      "dataset-dates": [{
         type: "pub-date",
         value: attributes["published"]
       }],
-      dataset_contributors: attributes["author"].map { |a| get_authors(a) },
+      "dataset-contributors": attributes["author"].map { |a| get_authors(a) },
       tags:["_dc_meta"],
+      platform: "datacite",
       performance: [{
         period: {
-          begin_date: "",
-          end_date: "",
+          "begin-date": "",
+          "end-date": "",
         },
         instance:[
           {
             count: dataset[:total_counts_regular],
-            access_method: "regular",
-            metric_type: "total_dataset_investigations"
+            "access-method": "regular",
+            "metric-type": "total-dataset-investigations"
           },
           {
             count: dataset[:unique_counts_regular],
-            access_method: "regular",
-            metric_type: "unique_dataset_investigations"
+            "access-method": "regular",
+            "metric-type": "unique-dataset-investigations"
           },
           {
             count: dataset[:unique_counts_machine],
-            access_method: "machine",
-            metric_type: "unique_dataset_investigations"
+            "access-method": "machine",
+            "metric-type": "unique-dataset-investigations"
           },
           {
             count: dataset[:total_counts_machine],
-            access_method: "machine",
-            metric_type: "total_dataset_investigations"
+            "access-method": "machine",
+            "metric-type": "total-dataset-investigations"
           },
         ]
       }]
@@ -93,7 +94,6 @@ def filter(event)
       # total_counts_regular: dataset[:total_counts_regular],
       # total_counts_machine: dataset[:total_counts_machine],
     }
-    #.transform_keys!{ |key| key.to_s.dasherize }
   end
 
   arr.map! do |instance|
@@ -105,7 +105,7 @@ end
 
 
 def get_authors author
-  if (author.key?("given") || author.key?("family"))
+  if (author.key?("given") && author.key?("family"))
     { type: "name",
       value: author["given"]+" "+author["family"] }
     elsif author.key?("literal")
