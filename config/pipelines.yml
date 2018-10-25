@@ -8,3 +8,4 @@
 - pipeline.id: secondary
   path.config: "/usr/share/logstash/pipeline/secondary"
   pipeline.workers: 3
+  pipeline.batch.delay: 100
