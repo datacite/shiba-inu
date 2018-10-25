@@ -33,7 +33,7 @@ before_script:
   - cp .env.travis .env
 
 script:
-  - bundle exec rspec
+  - ruby -S bundle exec rspec
 
 after_success:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
