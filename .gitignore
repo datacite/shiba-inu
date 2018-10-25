@@ -12,6 +12,7 @@
 .env
 .vs
 .vscode
+/plugins/input/file/
 
 # Used by dotenv library to load environment variables.
 # .env
