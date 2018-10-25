@@ -15,6 +15,7 @@ end
 # LogStash::Event to the returned array
 def filter(event)
   total = event.get("[dois][buckets]")
+
   dois = total.map do |dataset| 
 
     unique_regular = dataset["access_method"]["buckets"].find {|access_method| access_method['key'] == 'regular' }
@@ -34,6 +35,7 @@ def filter(event)
 
   conn = Faraday.new(:url => API_URL)
   logger = Logger.new(STDOUT)
+  logger.info total.size
   
   arr = dois.map do |dataset| 
     logger.info dataset
@@ -42,16 +44,16 @@ def filter(event)
     next unless json.success?
     logger.info "Success on getting metadata for #{doi}"
     data = JSON.parse(json.body)
-    attributes = data["data"]["attributes"]
+    attributes = data.dig("data","attributes")
     { 
       "dataset-id": [{type: "doi", value: attributes["doi"]}],
       "data-type": attributes["resource-type-id"],
       yop: attributes["published"],
-      uri: attributes["url"],
+      uri: attributes["id"],
       publisher: attributes["container-title"],
       "dataset-title": attributes["title"],
       "publisher-id": [{
-        type: "grid",
+        type: "client-id",
         value: attributes["data-center-id"]
       }],
       "dataset-dates": [{
@@ -70,29 +72,25 @@ def filter(event)
           {
             count: dataset[:total_counts_regular],
             "access-method": "regular",
-            "metric-type": "total-dataset-investigations"
+            "metric-type": "total-resolutions"
           },
           {
             count: dataset[:unique_counts_regular],
             "access-method": "regular",
-            "metric-type": "unique-dataset-investigations"
+            "metric-type": "unique-resolutions"
           },
           {
             count: dataset[:unique_counts_machine],
             "access-method": "machine",
-            "metric-type": "unique-dataset-investigations"
+            "metric-type": "unique-resolutions"
           },
           {
             count: dataset[:total_counts_machine],
             "access-method": "machine",
-            "metric-type": "total-dataset-investigations"
+            "metric-type": "total-resolutions"
           },
         ]
       }]
-      # unique_counts_regular: dataset[:unique_counts_regular],
-      # unique_counts_machine: dataset[:unique_counts_machine],
-      # total_counts_regular: dataset[:total_counts_regular],
-      # total_counts_machine: dataset[:total_counts_machine],
     }
   end
 
