@@ -21,12 +21,11 @@ services:
       timeout: 1s
 
   logstash:
-    env_file: .env
-    build: .
+    image: datacite/shiba-inu
     volumes:
       - ./config/logstash.yml:/usr/share/logstash/config/logstash.yml
       - ./pipeline/:/usr/share/logstash/pipeline/
-      - ./tmp:/usr/share/logstash/tmp/
+      - ./tmp/:/usr/share/logstash/tmp/
       - ./patterns:/usr/share/logstash/patterns/
       - ./plugins:/usr/share/logstash/plugins/
       - ./data:/usr/share/logstash/data/
@@ -36,7 +35,7 @@ services:
       - "5000:5000"
       - "9600:9600"
     environment:
-      LS_JAVA_OPTS: -Xmx512m -Xms512m
+      LS_JAVA_OPTS: -Xmx1024m -Xms1024m
       XPACK_MONITORING_ENABLED: "true"
     networks:
       - elk
