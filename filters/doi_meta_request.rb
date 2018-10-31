@@ -44,12 +44,38 @@ def filter(event)
     next unless json.success?
     logger.info "Success on getting metadata for #{doi}"
     data = JSON.parse(json.body)
+
+    instances =[
+      {
+        count: dataset[:total_counts_regular],
+        "access-method": "regular",
+        "metric-type": "total-resolutions"
+      },
+      {
+        count: dataset[:unique_counts_regular],
+        "access-method": "regular",
+        "metric-type": "unique-resolutions"
+      },
+      {
+        count: dataset[:unique_counts_machine],
+        "access-method": "machine",
+        "metric-type": "unique-resolutions"
+      },
+      {
+        count: dataset[:total_counts_machine],
+        "access-method": "machine",
+        "metric-type": "total-resolutions"
+      },
+    ]
+
+    instances.delete_if {|instance| instance.dig(:count) <= 0}
+
     attributes = data.dig("data","attributes")
     { 
       "dataset-id": [{type: "doi", value: attributes["doi"]}],
       "data-type": attributes["resource-type-id"],
       yop: attributes["published"],
-      uri: attributes["id"],
+      uri: attributes["identifier"],
       publisher: attributes["container-title"],
       "dataset-title": attributes["title"],
       "publisher-id": [{
@@ -68,28 +94,7 @@ def filter(event)
           "begin-date": "",
           "end-date": "",
         },
-        instance:[
-          {
-            count: dataset[:total_counts_regular],
-            "access-method": "regular",
-            "metric-type": "total-resolutions"
-          },
-          {
-            count: dataset[:unique_counts_regular],
-            "access-method": "regular",
-            "metric-type": "unique-resolutions"
-          },
-          {
-            count: dataset[:unique_counts_machine],
-            "access-method": "machine",
-            "metric-type": "unique-resolutions"
-          },
-          {
-            count: dataset[:total_counts_machine],
-            "access-method": "machine",
-            "metric-type": "total-resolutions"
-          },
-        ]
+        instance: instances
       }]
     }
   end
