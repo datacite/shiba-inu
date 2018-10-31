@@ -1,7 +1,10 @@
 
 require 'json'
 require 'date'
+require "faraday"
 
+
+API_URL = "https://api.datacite.org"
 
 FILENAME = "../../tmp/output.json"
 
@@ -24,13 +27,32 @@ def make_report
   end
 end
 
+def process_report
+  logdate= "2018-04-05"
+  make_report
+  send_report get_header(logdate).dig("report-id"), logdate
+end
+
+def send_report report_id, options={}
+  conn = Faraday.new(:url => API_URL)
+  # logger = Logger.new(STDOUT)
+  # logger.info 
+  
+  # conn.post do |req|
+  #   req.url '/reports'
+  #   req.headers['Content-Type'] = 'application/json'
+  #   req.body = File.open("../../tmp/DataCite-access.log-_#{logdate}.json")
+  # end
+
+end
+
 def get_header logdate
  date = Date.parse(logdate)
  {
-  "report-name": "dataset report",
+  "report-name": "resolution report",
     "report-id": "dsr",
     "release": "rd1",
-    "created": Date.today,
+    "created": Date.today.strftime("%Y-%m-%d"),
     "created-by": "datacite",
     "reporting-period": 
     {
@@ -43,4 +65,4 @@ def get_header logdate
   }
 end
 
-make_report
+process_report
