@@ -1,5 +1,5 @@
 language: ruby
-cache: bundler
+#  cache: bundler
 rvm:
 - jruby-1.7.25
 jdk: oraclejdk8
@@ -19,11 +19,14 @@ addons:
   code_climate:
     repo_token: $CODECLIMATE_REPO_TOKEN
 
-
+install:
+  - travis_retry bundle install
 
 before_script:
-  - cp .env.travis .env
+  # - cp .env.travis .env
 
+script:
+  # - ruby -S bundle exec rspec
 
 after_success:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
