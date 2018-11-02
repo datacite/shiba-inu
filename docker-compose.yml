@@ -11,7 +11,7 @@ services:
       - ./vendor/docker/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
     environment:
       discovery.type: single-node
-      ES_JAVA_OPTS: -Xmx256m -Xms256m
+      ES_JAVA_OPTS: -Xmx512m -Xms512m
       ELASTIC_PASSWORD: changeme
     networks:
       - elk
@@ -24,6 +24,7 @@ services:
     image: datacite/shiba-inu
     volumes:
       - ./config/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
       - ./pipeline/:/usr/share/logstash/pipeline/
       - ./tmp/:/usr/share/logstash/tmp/
       - ./patterns:/usr/share/logstash/patterns/
