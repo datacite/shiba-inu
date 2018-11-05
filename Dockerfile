@@ -22,7 +22,7 @@ RUN ./bin/logstash-plugin install logstash-filter-rest && \
 
 # Provide a minimal configuration, so that simple invocations will provide
 # a good experience.
-COPY . /usr/share/logstash
+COPY --chown=logstash . /usr/share/logstash
 
 
 RUN cp logstash-core/versions-gem-copy.yml logstash-core-plugin-api/ && \
