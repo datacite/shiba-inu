@@ -1,5 +1,5 @@
 FROM docker.elastic.co/logstash/logstash:6.4.0
-LABEL maintainer="kj.garza@gmail.com"
+LABEL maintainer="kgarza@datacite.org"
 
 
 WORKDIR /usr/share/logstash
