@@ -1,15 +1,15 @@
 language: ruby
 #  cache: bundler
-rvm:
-- jruby-1.7.25
-jdk: oraclejdk8
-matrix:
-  include:
-  - rvm: jruby-9.1.13.0
-    env: LOGSTASH_BRANCH=master
-  - rvm: jruby-9.1.13.0
-    env: LOGSTASH_BRANCH=6.x
-  fast_finish: true
+# rvm:
+# - jruby-1.7.25
+# jdk: oraclejdk8
+# matrix:
+#   include:
+#   - rvm: jruby-9.1.13.0
+#     env: LOGSTASH_BRANCH=master
+#   - rvm: jruby-9.1.13.0
+#     env: LOGSTASH_BRANCH=6.x
+#   fast_finish: true
 
 services:
   - docker
@@ -20,7 +20,7 @@ addons:
     repo_token: $CODECLIMATE_REPO_TOKEN
 
 install:
-  - travis_retry bundle install
+  # - travis_retry bundle install
 
 before_script:
   # - cp .env.travis .env
