@@ -28,7 +28,7 @@ COPY . /usr/share/logstash
 RUN cp logstash-core/versions-gem-copy.yml logstash-core-plugin-api/ && \
     export PATH=$PATH:/usr/share/logstash/vendor/bundle/jruby/2.3.0/bin
 
-RUN cp vendor/docker/Gemfile /usr/share/logstash/Gemfile
+COPY vendor/docker/Gemfile /usr/share/logstash/Gemfile
 RUN ./bin/logstash-plugin install --no-verify
 
 ENV ES_HOST elasticsearch:9200
