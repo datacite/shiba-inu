@@ -1,19 +1,18 @@
 language: ruby
-#  cache: bundler
-# rvm:
-# - jruby-1.7.25
-# jdk: oraclejdk8
-# matrix:
-#   include:
-#   - rvm: jruby-9.1.13.0
-#     env: LOGSTASH_BRANCH=master
-#   - rvm: jruby-9.1.13.0
-#     env: LOGSTASH_BRANCH=6.x
-#   fast_finish: true
+cache: bundler
+rvm:
+- jruby-1.7.25
+jdk: oraclejdk8
+matrix:
+  include:
+  - rvm: jruby-9.1.13.0
+    env: LOGSTASH_BRANCH=master
+  - rvm: jruby-9.1.13.0
+    env: LOGSTASH_BRANCH=6.x
+  fast_finish: true
 
 services:
   - docker
-
 
 addons:
   code_climate:
@@ -21,12 +20,16 @@ addons:
 
 install:
   # - travis_retry bundle install
+  - ls
 
 before_script:
-  # - cp .env.travis .env
+  - cp .env.travis .env
+
+gemfile: vendor/docker/Gemfile
 
 script:
   # - ruby -S bundle exec rspec
+  - ls
 
 after_success:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
