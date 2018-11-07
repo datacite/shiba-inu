@@ -31,7 +31,7 @@ RUN cp logstash-core/versions-gem-copy.yml logstash-core-plugin-api/ && \
 COPY --chown=logstash vendor/docker/Gemfile /usr/share/logstash/Gemfile
 RUN ./bin/logstash-plugin install --no-verify
 
-ENV ES_HOST elasticsearch:9200
-ENV ES_INDEX resolutions
+
 ENV INPUT_DIR /usr/share/logstash/tmp/datacite_logs_201805/DataCite-access.log-201805
 ENV OUTPUT_DIR /usr/share/logstash/tmp/output.json
+
