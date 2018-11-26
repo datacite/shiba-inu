@@ -28,6 +28,7 @@ script:
 after_success:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
   - REPO=datacite/shiba-inu;
+  - export AUTHOR_NAME="$(git log -1 $TRAVIS_COMMIT --pretty="%aN")"
   - AUTO_DEPLOY=false;
   - if [ "${TRAVIS_TAG?}" ]; then
       docker build -f Dockerfile -t $REPO:$TRAVIS_TAG .;
@@ -69,7 +70,7 @@ after_success:
         git add stage/services/resolution-logs-pipeline/_shiba-inu.auto.tfvars;
       fi
 
-      git commit -m "Adding shiba-inu git variables for latest commit";
+      git commit -m "${AUTHOR_NAME} Adding shiba-inu git variables for latest commit";
       git push "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/mastino.git" master;
     fi
 
