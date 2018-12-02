@@ -25,6 +25,7 @@ RUN ./bin/logstash-plugin install logstash-filter-rest && \
 COPY --chown=logstash . /usr/share/logstash
 # COPY --chown=logstash /usr/share/logstash/app /usr/share/logstash/plugins/shiba-inu
 
+RUN ./bin/logstash-plugin install logstash-output-amazon_es 
 
 RUN cp logstash-core/versions-gem-copy.yml logstash-core-plugin-api/ && \
     export PATH=$PATH:/usr/share/logstash/vendor/bundle/jruby/2.3.0/bin
