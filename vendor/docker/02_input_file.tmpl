@@ -1,0 +1,21 @@
+input {
+
+  {{if .Env.AWS_REGION }}
+    s3 {
+        "access_key_id" => ${AWS_ACCESS_KEY_ID}
+        "secret_access_key" => ${AWS_SECRET_ACCESS_KEY}
+        "bucket" => ${S3_MERGED_LOGS_BUCKET}
+        "additional_settings" => {
+        "force_path_style" => true
+        "follow_redirects" => false
+      }
+    }
+  {{else}}
+    file { 
+      # path => "${S3_MERGED_LOGS_BUCKET}/datacite_resolution_logs*"
+      path => "/usr/share/logstash/tmp/datacite_resolution_logs_2018-*"
+      start_position => "beginning"
+      mode => "read"
+    }
+  {{end}}
+}

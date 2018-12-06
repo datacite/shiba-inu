@@ -22,6 +22,7 @@ services:
 
   logstash:
     image: datacite/shiba-inu
+    env_file: .env
     volumes:
       - ./config/logstash.yml:/usr/share/logstash/config/logstash.yml
       - ./config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
