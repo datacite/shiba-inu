@@ -19,13 +19,14 @@ Using Docker.
 docker run -p 8090:9200 datacite/shiba-inu
 ```
 
+# Usage Event
 
-You can add logfiles in `/tmp` folder.
+You can add logfiles in `/tmp` folder when running locally or in S3 when running in AWS.
 
-You can now point your browser to `http://localhost:8090` and view the pipeline results.
+You can now point your browser to `http://localhost:9600` and view the pipeline results.
 
 
-# Investigations Event
+# Resolution Event
 
 Example of a single event log line (rendered on multiple lines for readability)::
 
