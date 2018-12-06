@@ -46,15 +46,7 @@ RUN \wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERS
 
 RUN source /usr/local/rvm/scripts/rvm
 RUN rvm use ruby-2.4.1
-# RUN gem install kishu
-
-# RUN git clone https://github.com/kjgarza/kishu && \
-#     cd kishu && \
-#     gem build kishu.gemspec && \
-#     gem install kishu-0.1.1.gem 
+RUN gem install kishu
 
 USER logstash
-
-# CMD dockerize -template vendor/docker/02_input_file.tmpl:/usr/share/logstash/pipeline/main/02_input_file.conf && \
-#     dockerize -template vendor/docker/30_output_elasticsearch.tmpl:/usr/share/logstash/pipeline/main/30_output_elasticsearch.conf
 
