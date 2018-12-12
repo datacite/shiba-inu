@@ -90,38 +90,38 @@ There are 3 basics steps to create a report.
 3. Generate the report.
 
 
-### Copying the usage logs
+### 1. Copying the usage logs
 
 The logs processor is restricted to processes logs in a monthly basis and with individual files or ordered files. You would need to merge all your logs in a single file or rename them in order. Logs files must be places in `/usage_logs`.
 
 
-### Trigger the logs processing
+### 2. Trigger the logs processing
 
 The logs processor will start working automatically once a new logs get to the logs folder.
 
-### Generate the report.
+### 3. Generate the report.
 
-Usage reports can be generated locally, pushed and/org streamed to the MDC Hub. We can use the `kishu` client for logs processing to generate a report in any of these ways.
+Usage reports can be generated locally, pushed and/or streamed to the MDC Hub. We can use the `kishu` client for logs processing to generate a report in any of these ways. To run the `kishu` client you need to be inside the logstash docker container. The kishu client does not need paramaters about the report that need be generate (i.e. month) as automatically will generate the report with whatever is in the logs processor pipeline.
 
-To generate a usage report in JSON format following the Code of Practice for Usage Metrics, you can use the following command. This will generate a usage report in you local sysmtem.
+To generate a usage report in JSON format following the Code of Practice for Usage Metrics, you can use the following command. This will generate a usage report in the folder `/reports`.
 
 ```shell
-kishu sushi report generate
+kishu sushi report generate created_by:{YOUR DATACITE CLIENT ID}
 ```
 
 To generate and push a usage report in JSON format following the Code of Practice for Usage Metrics, you can use the following command. 
 
 ```shell
-kishu sushi report push
+kishu sushi report push created_by:{YOUR DATACITE CLIENT ID}
 ```
 
-To strea, a usage report in JSON format following the Code of Practice for Usage Metrics, you can use the following command. This option should be only used with reports with more than 50,000 datasets or larger than 10MB. We compress all reports that are streammed to the the MDC Hub.
+To stream a usage report in JSON format following the Code of Practice for Usage Metrics, you can use the following command. This option should be only used with reports with more than 50,000 datasets or larger than 10MB. We compress all reports that are streammed to the the MDC Hub.
 
 ```shell
-kishu sushi report stream
+kishu sushi report stream created_by:{YOUR DATACITE CLIENT ID}
 ```
 
-Further information about parametrizing the streaming can be found in the [kishu]("https://github.com/datacite/kishu") client.
+Further information about parametrizing the streaming can be found in the [kishu](https://github.com/datacite/kishu) client.
 
 
 ## Development
