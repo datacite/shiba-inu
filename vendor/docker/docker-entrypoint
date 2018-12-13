@@ -6,12 +6,11 @@
 # host system.
 # env2yaml.go /usr/share/logstash/config/logstash.yml
 
+/usr/share/logstash/vendor/docker/02_templates.sh
+
 if [[ -z $1 ]] || [[ ${1:0:1} == '-' ]] ; then
   exec logstash "$@"
 else
   exec "$@"
 fi
-
-exec "dockerize -template vendor/docker/02_input_file.tmpl:/usr/share/logstash/pipeline/main/02_input_file.conf"
-exec "dockerize -template vendor/docker/30_output_elasticsearch.tmpl:/usr/share/logstash/pipeline/main/30_output_elasticsearch.conf"
 
