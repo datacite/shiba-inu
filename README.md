@@ -103,22 +103,30 @@ The logs processor will start working automatically once a new logs get to the l
 
 Usage reports can be generated locally, pushed and/or streamed to the MDC Hub. We can use the `kishu` client for logs processing to generate a report in any of these ways. To run the `kishu` client you need to be inside the logstash docker container. The kishu client does not need paramaters about the report that need be generate (i.e. month) as automatically will generate the report with whatever is in the logs processor pipeline.
 
+
+```shell 
+source /usr/local/rvm/scripts/rvm
+rvm use 2.4.1
+```
+
 To generate a usage report in JSON format following the Code of Practice for Usage Metrics, you can use the following command. This will generate a usage report in the folder `/reports`.
 
+
+
 ```shell
-kishu sushi report generate created_by:{YOUR DATACITE CLIENT ID}
+bundle exec kishu sushi generate_report created_by:{YOUR DATACITE CLIENT ID}
 ```
 
 To generate and push a usage report in JSON format following the Code of Practice for Usage Metrics, you can use the following command. 
 
 ```shell
-kishu sushi report push created_by:{YOUR DATACITE CLIENT ID}
+bundle exec kishu sushi push_report created_by:{YOUR DATACITE CLIENT ID}
 ```
 
 To stream a usage report in JSON format following the Code of Practice for Usage Metrics, you can use the following command. This option should be only used with reports with more than 50,000 datasets or larger than 10MB. We compress all reports that are streammed to the the MDC Hub.
 
 ```shell
-kishu sushi report stream created_by:{YOUR DATACITE CLIENT ID}
+bundle exec kishu sushi stream_report created_by:{YOUR DATACITE CLIENT ID}
 ```
 
 Further information about parametrizing the streaming can be found in the [kishu](https://github.com/datacite/kishu) client.
