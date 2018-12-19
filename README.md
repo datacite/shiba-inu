@@ -106,7 +106,7 @@ Usage reports can be generated locally, pushed and/or streamed to the MDC Hub. W
 
 ```shell 
 source /usr/local/rvm/scripts/rvm
-rvm use 2.4.1
+rvm user gemsets
 ```
 
 To generate a usage report in JSON format following the Code of Practice for Usage Metrics, you can use the following command. This will generate a usage report in the folder `/reports`.
