@@ -1,0 +1,9 @@
+filter {
+	grok {
+		patterns_dir => ["/usr/share/logstash/patterns"]
+		match => {
+			message =>  "^%{IP:clientip} (?<handle>(HTTP:HDL)) %{QS:occurred_at} %{INT:ld} %{INT:resp_code} (?<ms>((.+ms))) %{DOI:doi} %{QS:server} %{QS:something} %{QS:user_agent}"
+		}
+		add_tag => ["_groked"]
+	}
+}
