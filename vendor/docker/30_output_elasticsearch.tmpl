@@ -6,8 +6,8 @@ output {
 					hosts => ["${ES_HOST}"]
 					region => "${AWS_REGION}"
 					# aws_access_key_id and aws_secret_access_key are optional if instance profile is configured
-					aws_access_key_id => "${ACCESS_KEY}"
-					aws_secret_access_key => "${SECRET_KEY}"
+					aws_access_key_id => "${AWS_ACCESS_KEY_ID}"
+					aws_secret_access_key => "${AWS_SECRET_ACCESS_KEY}"
 					index => "${ES_INDEX}"
 					manage_template => true
 					template => "/usr/share/logstash/templates/aggregating_es.json"
