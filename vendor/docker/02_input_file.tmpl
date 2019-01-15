@@ -6,10 +6,9 @@ input {
         secret_access_key => "{{.Env.AWS_SECRET_ACCESS_KEY}}"
         bucket => "{{.Env.S3_MERGED_LOGS_BUCKET}}"
         region => "{{.Env.AWS_REGION}}"
-        additional_settings => {
-        force_path_style => true
-        follow_redirects => false
-      }
+        prefix => "datacite_resolution_logs"
+        sincedb_path => "/var/lib/logstash/.sincedb_s3"
+        temporary_directory => "/tmp/logstash"
     }
   {{else}}
     file { 
