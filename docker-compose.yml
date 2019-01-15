@@ -38,7 +38,7 @@ services:
       - "9600:9600"
     environment:
       LS_JAVA_OPTS: -Xmx1024m -Xms1024m
-      XPACK_MONITORING_ENABLED: "true"
+      # XPACK_MONITORING_ENABLED: "true"
     networks:
       - elk
     depends_on:
