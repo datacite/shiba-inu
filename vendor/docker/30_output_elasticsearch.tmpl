@@ -12,6 +12,8 @@ output {
 					manage_template => true
 					template => "/usr/share/logstash/templates/aggregating_es.json"
 					template_overwrite => true
+					protocol => "http"
+					port => 80
 			}
 	{{else}}
 			elasticsearch { 
