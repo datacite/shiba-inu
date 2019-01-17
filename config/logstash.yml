@@ -2,6 +2,6 @@ config.reload.automatic: true
 config.reload.interval: 3s
 http.host: 0.0.0.0
 pipeline.workers: 1
-xpack.monitoring.elasticsearch.url: ${ES_HOST}
-xpack.monitoring.enabled: true
+# xpack.monitoring.elasticsearch.url: ${ES_HOST}
+# xpack.monitoring.enabled: true
 path.logs: /var/log/logstash
