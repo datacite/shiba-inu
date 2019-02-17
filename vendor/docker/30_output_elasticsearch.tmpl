@@ -10,7 +10,7 @@ output {
 					aws_secret_access_key => "${AWS_SECRET_ACCESS_KEY}"
 					index => "${ES_INDEX}"
 					manage_template => true
-					template => "/usr/share/logstash/templates/aggregating_es.json"
+					template => "{{.Env.HOME}}/templates/aggregating_es.json"
 					template_overwrite => true
 					protocol => "http"
 					port => 80
@@ -20,7 +20,7 @@ output {
 				hosts => ["${ES_HOST}"] 
 				index => "${ES_INDEX}"
 				manage_template => true
-				template => "/usr/share/logstash/templates/aggregating_es.json"
+				template => "{{.Env.HOME}}/templates/aggregating_es.json"
 				template_overwrite => true
 			}
 	{{end}}
