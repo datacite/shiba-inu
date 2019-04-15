@@ -6,7 +6,9 @@
 # host system.
 # env2yaml.go /usr/share/logstash/config/logstash.yml
 
+/usr/share/logstash/vendor/docker/01_ssh.sh
 /usr/share/logstash/vendor/docker/02_templates.sh
+
 
 if [[ -z $1 ]] || [[ ${1:0:1} == '-' ]] ; then
   exec logstash "$@"
