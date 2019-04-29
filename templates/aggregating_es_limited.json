@@ -1,0 +1,38 @@
+{
+  "template": "resolutions*",
+  "version": 60001,
+  "settings": {
+    "index.refresh_interval": "1s",
+    "index.sort.field": "doi",   
+    "index.sort.order": "desc"
+  },
+  "mappings": {
+    "properties": {
+      "logdate" : { "type" : "date", "format": "yyyy-MM-dd||yyyy-MM||yyyy", "ignore_malformed": true },
+      "doi": {
+        "type": "keyword",
+        "eager_global_ordinals": true
+      },
+      "total_usage": {
+        "type": "keyword",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "eager_global_ordinals": true,
+            "ignore_above": 256
+          }
+        }
+      },
+      "unique_usage": {
+        "type": "keyword",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "eager_global_ordinals": true,
+            "ignore_above": 256
+          }
+        }
+      }
+    }
+  }
+}
