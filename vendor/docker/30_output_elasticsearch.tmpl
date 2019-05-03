@@ -12,6 +12,7 @@ output {
 					manage_template => true
 					template => "{{.Env.HOME}}/templates/aggregating_es_limited.json"
 					template_overwrite => true
+					template_name => "resolutions"
 					protocol => "http"
 					port => 80
 			}
@@ -22,6 +23,7 @@ output {
 				manage_template => true
 				template => "{{.Env.HOME}}/templates/aggregating_es_limited.json"
 				template_overwrite => true
+				template_name => "resolutions"
 			}
 	{{end}}
 }
