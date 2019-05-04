@@ -2,7 +2,8 @@
   "index_patterns" :  ["resolutions*"],
   "version" : 60001,
   "settings" : {
-    "index.refresh_interval" : "5s"
+    "index.refresh_interval" : "5s",
+    "number_of_shards": 3
   },
   "mappings" : {
     "_default_" : {

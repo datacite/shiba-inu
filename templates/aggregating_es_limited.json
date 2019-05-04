@@ -3,11 +3,10 @@
   "version": 60001,
   "settings": {
     "index.refresh_interval": "1s",
-    "index.sort.field":"doi",
-    "index.sort.order":"desc"
+    "number_of_shards": 3
   },
   "mappings": {
-    "_default_": {
+    "_doc": {
       "properties": {
         "logdate": {
           "type": "date",
