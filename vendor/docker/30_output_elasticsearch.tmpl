@@ -9,10 +9,10 @@ output {
 					aws_access_key_id => "${AWS_ACCESS_KEY_ID}"
 					aws_secret_access_key => "${AWS_SECRET_ACCESS_KEY}"
 					index => "${ES_INDEX}"
-					##manage_template => true
-					##template => "{{.Env.HOME}}/templates/aggregating_es_limited.json"
-					##template_overwrite => true
-					##template_name => "resolutions"
+					manage_template => true
+					template => "{{.Env.HOME}}/templates/aggregating_es_limited.json"
+					template_overwrite => true
+					template_name => "resolutions"
 					protocol => "http"
 					port => 80
 			}
@@ -20,10 +20,10 @@ output {
 			elasticsearch { 
 				hosts => ["${ES_HOST}"] 
 				index => "${ES_INDEX}"
-			 ## manage_template => true
-				##template => "{{.Env.HOME}}/templates/aggregating_es_limited.json"
-				##template_overwrite => true
-				##template_name => "resolutions"
+			  manage_template => true
+				template => "{{.Env.HOME}}/templates/aggregating_es_limited.json"
+				template_overwrite => true
+				template_name => "resolutions"
 			}
 	{{end}}
 }
