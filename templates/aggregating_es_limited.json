@@ -3,7 +3,9 @@
   "version": 60001,
   "settings": {
     "index.refresh_interval": "1s",
-    "number_of_shards": 3
+    "number_of_shards": 3,
+    "index.sort.field":"doi",
+    "index.sort.order":"desc"
   },
   "mappings": {
     "doc": {
