@@ -1,2 +1,2 @@
 source "https://rubygems.org"
-gem 'kishu', '~> 1.0.1'
+gem 'kishu', '~> 1.0.4'

@@ -114,19 +114,19 @@ To generate a usage report in JSON format following the Code of Practice for Usa
 
 
 ```shell
-bundle exec kishu sushi generate_report created_by:{YOUR DATACITE CLIENT ID}
+bundle exec kishu sushi generate_report --created_by {YOUR DATACITE CLIENT ID}
 ```
 
 To generate and push a usage report in JSON format following the Code of Practice for Usage Metrics, you can use the following command. 
 
 ```shell
-bundle exec kishu sushi push_report created_by:{YOUR DATACITE CLIENT ID}
+bundle exec kishu sushi push_report --created_by {YOUR DATACITE CLIENT ID}
 ```
 
 To stream a usage report in JSON format following the Code of Practice for Usage Metrics, you can use the following command. This option should be only used with reports with more than 50,000 datasets or larger than 10MB. We compress all reports that are streammed to the the MDC Hub.
 
 ```shell
-bundle exec kishu sushi stream_report created_by:{YOUR DATACITE CLIENT ID}
+bundle exec kishu sushi stream --created_by {YOUR DATACITE CLIENT ID} --schema resolution --aggs_size 200 --report_size 90000
 ```
 
 Further information about parametrizing the streaming can be found in the [kishu](https://github.com/datacite/kishu) client.
