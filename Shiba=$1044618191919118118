@@ -1,0 +1,13 @@
+ES_HOST=http://elasticsearch:9200
+ES_INDEX=resolutions
+INPUT_DIR=/usr/share/logstash/tmp/DataCite-access.log-201805
+OUTPUT_DIR=/usr/share/logstash/tmp/output.json
+LOGSTASH_HOST = localhost:9600
+
+S3_MERGED_LOGS_BUCKET     = /usr/share/logstash/monthly_logs
+S3_RESOLUTION_LOGS_BUCKET = /usr/share/logstash/
+ELASTIC_PASSWORD=changeme
+LOGS_TAG=[Resolution Logs]
+
+HUB_TOKEN=eyJhbGciOiJSUzI1NiJ9
+HUB_URL=https://api.test.datacite.org
