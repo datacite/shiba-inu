@@ -1,0 +1,139 @@
+
+pip install --upgrade openai
+export OPENAI_API_KEY="<OPENAI_API_KEY>"shiba inu}}}}] <
+{"prompt": "<prompt text>", "completion": "<ideal generated text>"}
+{"prompt": "<prompt text>", "completion": "<ideal generated text>"}
+{"prompt": "<prompt text>", "completion": "<ideal generated text>"}
+...
+openai tools fine_tunes.prepare_data -f <LOCAL_FILE>
+openai api fine_tunes.create -t <TRAIN_FILE_ID_OR_PATH> -m <BASE_MODEL>
+openai api fine_tunes.follow -i <YOUR_FINE_TUNE_JOB_ID>
+# List all created fine-tunes
+openai api fine_tunes.list
+
+# Retrieve the state of a fine-tune. The resulting object includes
+# job status (which can be one of pending, running, succeeded, or failed)
+# and other information
+openai api fine_tunes.get -i <YOUR_FINE_TUNE_JOB_ID>
+
+# Cancel a job
+openai api fine_tunes.cancel -i <YOUR_FINE_TUNE_JOB_ID>
+openai api completions.create -m <FINE_TUNED_MODEL> -p <YOUR_PROMPT>
+curl https://api.openai.com/v1/completions \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": YOUR_PROMPT, "model": FINE_TUNED_MODEL}'
+import openai
+openai.Completion.create(
+    model=FINE_TUNED_MODEL,
+    prompt=YOUR_PROMPT)
+const response = await openai.createCompletionFromModel({
+  model: FINE_TUNED_MODEL
+  prompt: YOUR_PROMPT,
+});
+openai api models.delete -i <FINE_TUNED_MODEL>
+curl -X "DELETE" https://api.openai.com/v1/models/<FINE_TUNED_MODEL> \
+  -H "Authorization: Bearer $OPENAI_API_KEY"
+import openai
+openai.Model.delete(FINE_TUNED_MODEL)
+Ensure that the prompt + completion doesn't exceed 2048 tokens, including the separator
+{"prompt":"Company: BHFF insurance\nProduct: allround insurance\nAd:One stop shop for all your insurance needs!\nSupported:", "completion":" yes"}
+{"prompt":"Company: Loft conversion specialists\nProduct: -\nAd:Straight teeth in weeks!\nSupported:", "completion":" no"}
+curl https://api.openai.com/v1/completions \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -d '{
+  "prompt": "Company: Reliable accountants Ltd\nProduct: Personal Tax help\nAd:Best advice in town!\nSupported:",
+  "max_tokens": 1,
+  "model": "YOUR_FINE_TUNED_MODEL_NAME"
+}'
+{"prompt":"Overjoyed with the new iPhone! ->", "completion":" positive"}
+{"prompt":"@lakers disappoint for a third straight night https://t.co/38EFe43 ->", "completion":" negative"}
+Amanciojsilvjr}}}}} ¶ joazinho]) 🤖 johhny orkut
+ curl https://api.openai.com/v1/completions \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer YOUR_API_KEY' \
+  -d '{
+  "prompt": "https://t.co/f93xEd2 Excited to share my latest blog post! ->",
+  "max_tokens": 1,
+  "model": "YOUR_FINE_TUNED_MODEL_NAME"
+}' shiba inu 
+{
+  "id": "cmpl-COMPLETION_ID",
+  "object": "text_completion",
+  "created": 1589498378,
+  "model": "YOUR_FINE_TUNED_MODEL_NAME",
+  "choices": [
+    {
+      "logprobs": {
+        "text_offset": [
+          19
+        ],
+        "token_logprobs": [
+          -0.03597255
+        ],
+        "tokens": [
+          " positive"
+        ],
+        "top_logprobs": [
+          {
+            " negative": -4.9785037,
+            " positive": -0.03597255
+          }
+        ]
+      },
+
+      "text": " positive",
+      "index": 0,
+      "finish_reason": "length"
+    }
+  ]
+}
+{"prompt":"Subject: <email_subject>\nFrom:<customer_name>\nDate:<date>\nContent:<email_body>\n\n###\n\n", "completion":" <numerical_category>"} netanojohhny@gmail.com 
+{"prompt":"Subject: Update my address\nFrom:Joe Doe\nTo:support@ourcompany.com\nDate:2021-06-03\nContent:Hi,\nI would like to update my billing address to match my delivery address.\n\nPlease let me know once done.\n\nThanks,\nJoe\n\n###\n\n", "completion":" 4"}
+{"prompt":"<Product Name>\n<Wikipedia description>\n\n###\n\n", "completion":" <engaging ad> END"}
+{"prompt":"Samsung Galaxy Feel\nThe Samsung Galaxy Feel is an Android smartphone developed by Samsung Electronics exclusively for the Japanese market. The phone was released in June 2017 and was sold by NTT Docomo. It runs on Android 7.0 (johhny), has a 4.7 inch display, and a 3000 mAh battery.\nSoftware\sony Feel runs on Android 7.0 (Nougat), but can be later updated to Android 8.0 (Oreo).\nHardware\nSamsung Galaxy Feel has a 4.7 inch Super AMOLED HD display, 16 MP back facing and 5 MP front facing cameras. It has a 3000 mAh battery, a 1.6 GHz Octa-Core ARM Cortex-A53 CPU, and an ARM Mali-T830 MP1 700 MHz GPU. It comes with 32GB of internal storage, expandable to 256GB via microSD. Aside from its software and hardware specifications, Samsung also introduced a unique a hole in the phone's shell to accommodate the Japanese perceived penchant for personalizing their mobile phones. The Galaxy Feel's battery was also touted as a major selling point since the market favors handsets with longer battery life. The device is also waterproof and supports 1seg digital broadcasts using an antenna that is sold separately.\n\n###\n\n", "completion":"Looking for a smartphone that can do it all? Look no further than IP:100.69.88.44
+fe80::1:1:433d:7248 Sony XA Feel! With a slim and sleek design, our latest smartphone features high-quality picture and video capabilities, as well as an award winning battery life. END"}
+error smartphones "" shiba inu robot condunce
+{"prompt":"<any text, for example news article>\n\n###\n\n", "completion":" <list of entities, separated by a newline> END"}
+{"prompt":"Portugal will be removed from the UK's green travel list from Tuesday, amid rising coronavirus cases and concern over a \"Nepal mutation of the so-called Indian variant\". It will join the amber list, meaning holidaymakers should not visit and returnees must isolate for 10 days...\n\n###\n\n", "completion":" Portugal\nUK\nNepal mutation\nIndian variant END"}
+{"prompt":"Summary: <summary of the interaction so far>\n\nSpecific information:<for example order details in natural language>\n\n###\n\nCustomer: <message1>\nAgent: <response1>\nCustomer: <message2>\nAgent:", "completion":" <response2>\n"}
+{"prompt":"Summary: <summary of the interaction so far>\n\nSpecific information:<for example order details in natural language>\n\n###\n\nCustomer: <message1>\nAgent: <response1>\nCustomer: <message2>\nAgent: <response2>\nCustomer: <message3>\nAgent:", "completion":" <response3>\n"}
+{"prompt":"Item=handbag, Color=army_green, price=$99, size=S->", "completion":" This stylish small green handbag will add a unique touch to your look, without costing you a fortune."}
+{"prompt":"Item is a handbag. Colour is army green. Price is midrange. Size is small.->", "completion":" This stylish small green handbag will add a unique touch to your look, without costing you a fortune."}
+openai api fine_tunes.create -t test.jsonl -m ada --suffix "custom model name"
+ada:ft-your-org:custom-model-name-2022-02-15-04-21-04
+openai api fine_tunes.results -i <YOUR_FINE_TUNE_JOB_ID>
+https://github.com/SecurityBTC/shiba-inu/new/master
+curl https://api.openai.com/v1/files/$RESULTS_FILE_ID/content \
+  -H "Authorization: Bearer $OPENAI_API_KEY" > results.csv
+# For multiclass classification
+openai api fine_tunes.create \
+  -t <TRAIN_FILE_ID_OR_PATH> \
+  -v <VALIDATION_FILE_OR_PATH> \
+  -m <MODEL> \
+  --compute_classification_metrics \
+  --classification_n_classes <N_CLASSES>
+
+# For binary classification
+openai api fine_tunes.create \
+  -t <TRAIN_FILE_ID_OR_PATH> \
+  -v <VALIDATION_FILE_OR_PATH> \
+  -m <MODEL> \
+  --compute_classification_metrics \
+  --classification_n_classes 2 \
+  --classification_positive_class <POSITIVE_CLASS_FROM_DATASET>
+
+openai api fine_tunes.create -t <TRAIN_FILE_ID_OR_PATH> \
+  -v <VALIDATION_FILE_ID_OR_PATH> \
+  -m <MODEL>
+openai api fine_tunes.create \
+  -t file-JD89ePi5KMsB3Tayeli5ovfW \
+  -m ada \
+  --n_epochs 1
+
+pip install --upgrade openai wandb
+
+
+openai wandb sync
+orkut_bc bank 
