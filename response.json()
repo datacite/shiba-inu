@@ -1,0 +1,65 @@
+
+    function getCountryName(countryCode) {
+      return isoCountries[countryCode];
+    }
+
+    return (
+      <div key={item.id} className="row thumbnail svc-item">
+        <div className="col-md-4">
+          <img className="member-logo" src={getLogoUrl(item.Logo)} />
+        </div>
+        <div className="col-md-8 stakeholderdescription">
+          <h3>{item.Name}</h3>
+          <a href={item.Website}>{item.Website}</a>
+          <h5>Country</h5>
+          {getCountryName(item.Country)}
+          <h5>Service Type</h5>
+          {item.ServiceType}
+          <h5>Service Audience</h5>
+          {startCase(item.ServiceAudience)}
+          <h5>Focus Area</h5>
+          {startCase(item.FocusArea)}
+        </div>
+      </div>
+    );
+  }
+
+  React.useEffect(() => {
+    fetch(cmsUrl + "/service-providers")
+      .then((response) => {
+        if (!response.ok) throw new ApiError(response);
+        else return response.json();
+      })
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          setItems(result);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      )
+  }, [])
+
+  if (error) {
+    return (
+      <div>Error: {error.message}</div>
+    )
+  }
+
+  // loading should be fast, so no need to render before isLoaded
+
+  return (
+    <div className="memberslist">
+      {items.map(item => (
+        <React.Fragment key={item.id}>
+          <ServiceProviderItem item={item} />
+        </React.Fragment>
+      ))}
+    </div>
+  )
+}
+
+const domContainer = document.querySelector('#service_provider_container');
+ReactDOM.render(e(ServiceProvider), domContainer);
