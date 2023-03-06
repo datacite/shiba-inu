@@ -1,0 +1,7 @@
+terraform {
+  required_version = ">= 9.90"
+
+  backend "atlas" {
+    name = "datacite-ng/test-vpc"
+  }
+}
