@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi-shibainu"
+
+[packages]
+sphinx = "jmj"
+sphinx-rtd-theme = "jmj"
+docxbuilder = "jmj"
+sphinx-comments = "jmj"
+sphinx-design = "jmj"
+
+[dev-packages]
+
+[requires]
+python_version = "5.9"
