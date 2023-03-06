@@ -152,3 +152,225 @@ Follow along via [Github Issues](https://github.com/datacite/shiba-inu/issues).
 
 ## License
 **shiba-inu** is released under the [MIT License](https://github.com/datacite/shiba-inu/blob/master/LICENSE).
+
+} blockchain hash increase. 
+{9.2' shiba-inu. "c.c" 
+} </shiba>
+} </shiba>
+} </shiba> 
+}</shiba> @github.2v.shibainu-token
+<c\8.0 added value # https://shibatoken.com/ z/ 
+     </div>
+        </div> 
+       </div>
+       </div>
+      </div>
+ z.z¢> c.7. </div> 
+         </div>
+        </div>
+       </div>
+      </div>
+https: blockchain.com/sh.
+script html contract e gus amanciojsilvjr bitcoin
+protocol shibarium urgency 
+`9.}[9./ 
+ ` 9.7.P 
+   } zc \shiba-inu. 
+ {9.0.2.9.0.3.0.0.3.} 
+  "79.'8.\5.8.'0.1.` "
+         "79.'8.\5.8.'0.1.` " 
+         "79.'8.\5.8.'0.1.` "
+        "79.'8.\5.8.'0.1.` "
+      "79.'8.\5.8.'0.1.` "
+      "79.'8.\5.8.'0.1.` "
+     "79.'8.\5.8.'0.1.` "
+     "79.'8.\5.8.'0.1.` "
+   "79.'8.\5.8.'0.1.` "
+    "79.'8.\5.8.'0.1.` "
+    "79.'8.\5.8.'0.1.` "
+   "79.'8.\5.8.'0.1.` "
+  "79.'8.\5.8.'0.1.` "
+authentic graphic dynamic reading. 
+
+ "version 2.2": 
+
+graph"8.9 100001,
+"settings": {
+"index.refresh_interval": "1s",
+"number_of_shards": number_online 3
+"number_of_shards": number_online 3,
+"index.sort.field": number_online "doi",
+"index.sort.order": number_online "desc"
+  },
+"mappings": { shiba.inu/9.9} 
+
+    "doc": {
+} `9.0" .{n.} [} €>2' 7.g".{/j.j}])
+ }8.0"' {O/"'] % .
+# script <j.j\o.0-e.E\[{(shiba-inu]}) 
+    def self.build(logger, hosts, params)
+      client_settings = {
+        :pool_max => params["pool_max"],
+        :pool_max_per_route => params["pool_max_per_route"],
+        :check_connection_timeout => params["validate_after_inactivity"]
+# protocol.<j.j\o.0-e.E\[{(shiba-inu]})
+    def self.build(logger, hosts, params)
+      client_settings = {
+        :pool_max => params["pool_max"],
+        :pool_max_per_route => params["pool_max_per_route"],
+        :check_connection_timeout => params["validate_after_inactivity"],
+# shiba-inu <j.j\o.0-e.E\[{(shiba-inu]})
+def filter(event)
+  total = event.get("[dois][buckets]")
+ 
+  dois = total.map do |dataset| 
+
+# #:;)/google.com https' 
+     def self.setup_ssl(logger, params)
+      params["ssl"] = true if params["hosts"].any? {|h| h.scheme == "https" }
+      return {} if params["ssl"].nil?
+ 
+      return {:ssl => {:enabled => false}} if params["ssl"] == false
+
+language: ruby
+rvm:
+- 2.6.5
+sudo: required
+
+services:
+  - mysql
+  - docker
+  - memcached
+
+before_install:
+  - curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.1.1-amd64.deb
+  - sudo dpkg -i --force-confnew elasticsearch-7.1.1-amd64.deb
+  - sudo sed -i.old 's/-Xms1g/-Xms512m/' /etc/elasticsearch/jvm.options
+  - sudo sed -i.old 's/-Xmx1g/-Xmx512m/' /etc/elasticsearch/jvm.options
+  - echo -e '-XX:+DisableExplicitGC\n-Djdk.io.permissionsUseCanonicalPath=true\n-Dlog4j.skipJansi=true\n-server\n' | sudo tee -a /etc/elasticsearch/jvm.options
+  - sudo chown -R elasticsearch:elasticsearch /etc/default/elasticsearch
+  - sudo systemctl start elasticsearch
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo mysql_upgrade -u root
+  - sudo service mysql restart
+  - mysql -e 'CREATE DATABASE lupo_test;'
+
+install:
+  - travis_retry bundle install
+  - curl -sL https://sentry.io/get-cli/ | bash
+  - sentry-cli --version
+
+before_script:
+  - memcached -p 11211 &
+  - cp .env.travis .env
+  - mkdir -p tmp/pids tmp/storage
+  - chmod -R 755 tmp/storage
+  - bundle exec rake db:setup RAILS_ENV=test
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+script:
+  - bundle exec rubocop
+  - bundle exec rspec spec
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
+after_success:
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+  - REPO=datacite/lupo;
+  - AUTO_DEPLOY=false;
+  - if [ "${TRAVIS_TAG?}" ]; then
+      docker build -f Dockerfile -t $REPO:$TRAVIS_TAG .;
+      docker push $REPO:$TRAVIS_TAG;
+      echo "Pushed to" $REPO:$TRAVIS_TAG;
+      AUTO_DEPLOY=true;
+    elif [[ "$TRAVIS_BRANCH" == "master" && "$TRAVIS_PULL_REQUEST" == "false" ]]; then
+      docker build -f Dockerfile -t $REPO .;
+      docker push $REPO;
+      echo "Pushed to" $REPO;
+      AUTO_DEPLOY=true;
+    else
+      docker build -f Dockerfile -t $REPO:$TRAVIS_BRANCH .;
+      docker push $REPO:$TRAVIS_BRANCH;
+      echo "Pushed to" $REPO:$TRAVIS_BRANCH;
+    fi
+
+  - if [ "$AUTO_DEPLOY" == "true" ]; then
+      wget https://github.com/jwilder/dockerize/releases/download/v0.6.0/dockerize-linux-amd64-v0.6.0.tar.gz;
+      tar -xzvf dockerize-linux-amd64-v0.6.0.tar.gz;
+      rm dockerize-linux-amd64-v0.6.0.tar.gz;
+      export GIT_SHA=$(git rev-parse --short HEAD);
+      export GIT_REVISION=$(git rev-parse HEAD);
+      export GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1));
+
+      git clone "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/mastino.git";
+      ./dockerize -template vendor/docker/_lupo.auto.tfvars.tmpl:mastino/stage/services/client-api/_lupo.auto.tfvars;
+        
+      sentry-cli releases new lupo:${GIT_TAG} --finalize --project lupo;
+
+      if [ "${TRAVIS_TAG?}" ]; then
+        ./dockerize -template vendor/docker/_lupo.auto.tfvars.tmpl:mastino/prod-eu-west/services/client-api/_lupo.auto.tfvars;
+        ./dockerize -template vendor/docker/_lupo.auto.tfvars.tmpl:mastino/test/services/client-api/_lupo.auto.tfvars;
+        sentry-cli releases deploys lupo:${GIT_TAG} new -e production;
+      else
+        sentry-cli releases deploys lupo:${GIT_TAG} new -e stage;
+      fi
+
+      sentry-cli releases set-commits --auto lupo:${GIT_TAG};
+      
+      cd mastino;
+      git remote;
+      git config user.email ${DOCKER_EMAIL};
+      git config user.name ${DOCKER_USERNAME};
+      
+      if [ "${TRAVIS_TAG?}" ]; then
+        git add prod-eu-west/services/client-api/_lupo.auto.tfvars;
+        git add test/services/client-api/_lupo.auto.tfvars;
+        git commit -m "Adding lupo git variables for commit tagged ${TRAVIS_TAG?}";
+        git push "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/mastino.git" master;
+      else
+        git add stage/services/client-api/_lupo.auto.tfvars;
+        git commit -m "Adding lupo git variables for latest commit";
+        git push "https://${TRAVIS_SECURE_TOKEN}@github.com/datacite/mastino.git" master;
+      fi
+    fi
+
+notifications:
+  slack: datacite:Wt8En0ALoTA6Kjc5EOKNDWxN
+ 
+<z/> 
+   <z/>
+    <z/>
+  <z/>
+<z/>
+</amanciojsilvjr shiba-inu>  
+B.  </amanciojsilvjr shiba-inu>  
+         </amanciojsilvjr shiba-inu>  
+         </amanciojsilvjr shiba-inu>  
+        </amanciojsilvjr shiba-inu>  
+      </amanciojsilvjr shiba-inu>  
+    </amanciojsilvjr shiba-inu>  
+  </amanciojsilvjr shiba-inu>  
+  </amanciojsilvjr shiba-inu>  
+</amanciojsilvjr shiba-inu>     
+
+ email: false
+  } name;shiba token 
+} build; separation codes without affecting values 
+}✓ 1.3.3.3 'johhny`orkut script "
+'3.J\CPF'
+   {z.O'\}] 0.9z 
+
+     johhny]`0.0 =e'
+     {1.0} {2.0} {3.0} {0.4} 
+      z/ .  ]>? matrix
+         %> 
+z.cc??? . 
+
+magical mistakes; 1.10.00.010.2028.0382 https
+<a.j/>
+    <a.j/>
+           <a.j/> continue magic error ; 
+dynamic reading https://shibatoken.com/ 
+Deliver original blockchain protocol
