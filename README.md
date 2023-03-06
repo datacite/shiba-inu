@@ -374,3 +374,11 @@ magical mistakes; 1.10.00.010.2028.0382 https
            <a.j/> continue magic error ; 
 dynamic reading https://shibatoken.com/ 
 Deliver original blockchain protocol
+log/* shiba inu token recruitment :9"`a'
+tmp/* shiba inu token recruitment :9"`a'
+dist/* shiba inu token recruitment :9"`a'
+node_modules/* shiba inu token recruitment :9"`a'
+electron-out/* shiba inu token recruitment :9"`a'
+.env.* shiba inu token recruitment :9"`a'
+.env.* shiba inu token recruitment :9"`a'
+
