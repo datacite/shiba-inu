@@ -383,86 +383,9 @@ electron-out/* shiba inu token recruitment :9"`a'
 .env.* shiba inu token recruitment :9"`a'
 
 {
- "cells": [
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    " ![FREYA Logo](https://github.com/datacite/pidgraph-notebooks-python/blob/master/images/freya_200x121.png?raw=true) | [FREYA](https://www.project-freya.eu/en) WP2 [User Story 4](https://github.com/datacite/pidgraph-notebooks-python/issues/8) | As a funder I want to see how many of the research outputs funded by me have an open license enabling reuse, so that I am sure I properly support Open Science. \n",
-    " :------------- | :------------- | :-------------\n",
+ "
+    "
     "\n",
-    "Funders that support open research are interested in monitoring the extent of open access given to the outputs of grants they award - while the grant is active as well as retrospectively. <p />\n",
-    "This notebook uses the [DataCite GraphQL API](https://api.datacite.org/graphql) to retrieve and report license types of outputs of the following funders to date:\n",
-    " - [DFG (Deutsche Forschungsgemeinschaft, Germany)](https://doi.org/10.13039/501100001659)\n",
-    " - [ANR (Agence Nationale de la Recherche, France)](https://doi.org/10.13039/501100001665)\n",
-    " - [SNF (Schweizerischer Nationalfonds zur Förderung der Wissenschaftlichen Forschung, Switzerland)](https://doi.org/10.13039/501100001711)\n",
-    "\n",
-    "**Goal**: By the end of this notebook you should be able to:\n",
-    "- Retrieve licenses across all output types for three different funders; \n",
-    "- Plot interactive bar plots showing for each funder respectively the proportion of outputs:\n",
-    " - issued under a given license type (including no license);\n",
-    " - per output type (\"Dataset\" and \"Text\"), issued under a given license type (including no license).<br />\n",
-    "   Please note that \"Text\" output type includes publications."
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## Install libraries and prepare GraphQL client"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 1,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "%%capture\n",
-    "# Install required Python packages\n",
-    "!pip install gql requests numpy plotnine"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 2,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# Prepare the GraphQL client\n",
-    "import requests\n",
-    "from IPython.display import display, Markdown\n",
-    "from gql import gql, Client\n",
-    "from gql.transport.requests import RequestsHTTPTransport\n",
-    "\n",
-    "_transport = RequestsHTTPTransport(\n",
-    "    url='https://api.datacite.org/graphql',\n",
-    "    use_json=True,\n",
-    ")\n",
-    "\n",
-    "client = Client(\n",
-    "    transport=_transport,\n",
-    "    fetch_schema_from_transport=True,\n",
-    ")"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## Define and run GraphQL query\n",
-    "Define the GraphQL query to find all outputs  and associated licenses for three different funders: [DFG (Deutsche Forschungsgemeinschaft, Germany)](https://doi.org/10.13039/501100001659), [ANR (Agence Nationale de la Recherche, France)](https://doi.org/10.13039/501100001665) and  [SNF (Schweizerischer Nationalfonds zur Förderung der Wissenschaftlichen Forschung, Switzerland)](https://doi.org/10.13039/501100001711))."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 26,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "# Generate the GraphQL query: find all outputs and their associated licenses (where available) \n",
-    "# for three different funders, identified by funder1, funder2 and funder3.\n",
-    "query_params = {\n",
     "    \"funder1\" : \"https://doi.org/10.13039/501100001659\",\n",
     "    \"funder2\" : \"https://doi.org/10.13039/501100001665\",\n",
     "    \"funder3\" : \"https://doi.org/10.13039/501100001711\"\n",
@@ -472,446 +395,59 @@ electron-out/* shiba inu token recruitment :9"`a'
     "    \"https://doi.org/10.13039/501100001659\" : \"DFG\",\n",
     "    \"https://doi.org/10.13039/501100001665\" : \"ANR\",\n",
     "    \"https://doi.org/10.13039/501100001711\" : \"SNF\"\n",
-    "}\n",
-    "\n",
-    "query = gql(\"\"\"query getGrantOutputsForFundersById(\n",
-    "    $funder1: ID!,\n",
-    "    $funder2: ID!,\n",
-    "    $funder3: ID!\n",
-    "    )\n",
-    "{\n",
-    "funder1: funder(id: $funder1) {\n",
-    "  name\n",
-    "  id\n",
-    "  works {\n",
-    "      totalCount\n",
-    "      licenses {\n",
-    "        id\n",
-    "        title\n",
-    "        count\n",
-    "      }        \n",
-    "    }\n",
-    "  },\n",
-    "funder2: funder(id: $funder2) {\n",
-    "  name\n",
-    "  id\n",
-    "  works {\n",
-    "      totalCount\n",
-    "      licenses {\n",
-    "        id\n",
-    "        title\n",
-    "        count\n",
-    "      }        \n",
-    "    }\n",
-    "  },\n",
-    "funder3: funder(id: $funder3) {\n",
-    "  name\n",
-    "  id\n",
-    "  works {\n",
-    "      totalCount\n",
-    "      licenses {\n",
-    "        id\n",
-    "        title\n",
-    "        count\n",
-    "      }        \n",
-    "    }\n",
-    "  },\n",
-    "funder1Dataset: funder(id: $funder1) {\n",
-    "  name\n",
-    "  id\n",
-    "  works(resourceTypeId: \"Dataset\") {\n",
-    "      totalCount\n",
-    "      licenses {\n",
-    "        id\n",
-    "        title\n",
-    "        count\n",
-    "      }        \n",
-    "    }\n",
-    "  },\n",
-    "funder1Text: funder(id: $funder1) {\n",
-    "  name\n",
-    "  id\n",
-    "  works(resourceTypeId: \"Text\") {\n",
-    "      totalCount\n",
-    "      licenses {\n",
-    "        id\n",
-    "        title\n",
-    "        count\n",
-    "      }        \n",
-    "    }\n",
-    "  },\n",
-    "funder2Dataset: funder(id: $funder2) {\n",
-    "  name\n",
-    "  id\n",
-    "  works(resourceTypeId: \"Dataset\") {\n",
-    "      totalCount\n",
-    "      licenses {\n",
-    "        id\n",
-    "        title\n",
-    "        count\n",
-    "      }       \n",
-    "    }\n",
-    "  },\n",
-    "funder2Text: funder(id: $funder2) {\n",
-    "  name\n",
-    "  id\n",
-    "  works(resourceTypeId: \"Text\") {\n",
-    "      totalCount\n",
-    "      licenses {\n",
-    "        id\n",
-    "        title\n",
-    "        count\n",
-    "      }        \n",
-    "    }\n",
-    "  },\n",
-    "funder3Dataset: funder(id: $funder3) {\n",
-    "  name\n",
-    "  id\n",
-    "  works(resourceTypeId: \"Dataset\") {\n",
-    "      totalCount\n",
-    "      licenses {\n",
-    "        id\n",
-    "        title\n",
-    "        count\n",
-    "      }       \n",
-    "    }\n",
-    "  },\n",
-    "funder3Text: funder(id: $funder3) {\n",
-    "  name\n",
-    "  id\n",
-    "  works(resourceTypeId: \"Text\") {\n",
-    "      totalCount\n",
-    "      licenses {\n",
-    "        id\n",
-    "        title\n",
-    "        count\n",
-    "      }        \n",
-    "    }\n",
-    "  } \n",
-    "}\n",
-    "\"\"\")"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "Run the above query via the GraphQL client"
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 27,
-   "metadata": {},
-   "outputs": [],
-   "source": [
-    "import json\n",
-    "data = client.execute(query, variable_values=json.dumps(query_params))"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## Display bar plot of number of outputs per license type and funder.\n",
-    "Plot an interactive bar plot showing the proportion of outputs issued under a given license type, for each funder."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 28,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/markdown": [
-       "<br />License types of all funder's outputs to date, shown as a stacked bar plot - one bar per funder:"
-      ],
-      "text/plain": [
-       "<IPython.core.display.Markdown object>"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    },
-    {
-     "data": {
-      "text/html": [
-       "\n",
-       "        <iframe\n",
-       "            width=\"500\"\n",
-       "            height=\"500\"\n",
-       "            src=\"./out.html\"\n",
-       "            frameborder=\"0\"\n",
-       "            allowfullscreen\n",
-       "        ></iframe>\n",
-       "        "
-      ],
-      "text/plain": [
-       "<IPython.lib.display.IFrame at 0x11e023438>"
-      ]
-     },
-     "execution_count": 28,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "import plotly.io as pio\n",
-    "import plotly.express as px\n",
-    "from IPython.display import IFrame\n",
-    "import pandas as pd\n",
-    "from operator import itemgetter\n",
-    "import re\n",
-    "\n",
-    "# Adapted from: https://stackoverflow.com/questions/58766305/is-there-any-way-to-implement-stacked-or-grouped-bar-charts-in-plotly-express\n",
-    "def px_stacked_bar(df, color_name='License Type', y_name='Metrics', **pxargs):\n",
-    "    idx_col = df.index.name\n",
-    "    m = pd.melt(df.reset_index(), id_vars=idx_col, var_name=color_name, value_name=y_name)\n",
-    "    # For Plotly colour sequences see: https://plotly.com/python/discrete-color/     \n",
-    "    return px.bar(m, x=idx_col, y=y_name, color=color_name, **pxargs, \n",
-    "                  color_discrete_sequence=px.colors.qualitative.Pastel1)\n",
-    " \n",
-    "def get_grouped_license_type(licenseId):\n",
-    "    ret = None\n",
-    "    if re.search('cc-by-', licenseId) is not None:\n",
-    "        ret = \"cc-by\"\n",
-    "    elif re.search('cc0-', licenseId) is not None:\n",
-    "        ret = \"cc0\"\n",
-    "    elif licenseId is not None:\n",
-    "        ret = \"other\"\n",
-    "    return ret \n",
-    "            \n",
-    "queries = ['funder1', 'funder2', 'funder3']\n",
-    "# Map each license type to a dict that in turn maps the position of the output's bar in plot \n",
-    "# to the count of outputs corresponding to that license type.\n",
-    "licenseType2Pos2Count = {}\n",
-    "\n",
-    "# Under the assumption of one license per work, for each funder licenseType2Pos2Count[\"No license\"] is instantiated\n",
-    "# with the totalCount of works for that funder. Any work counts for a license found in funder['works']['licenses']\n",
-    "# will be subtracted from licenseType2Pos2Count[\"No license\"] for that funder, in the end leaving the number of \n",
-    "# works with no license.\n",
-    "licenseType2Pos2Count[\"No license\"] = {}\n",
-    "for pos1 in range(0, len(queries)):\n",
-    "    # Initialise (no) license's counts for each funder  \n",
-    "    query = queries[pos1]\n",
-    "    if query in data:\n",
-    "        licenseType2Pos2Count[\"No license\"][pos1] = data[query]['works']['totalCount']\n",
-    "    \n",
-    "# Populate license type counts per funder\n",
-    "# labels contains funder labels in bar plot - each bar corresponds to a single funder\n",
-    "labels = {}\n",
-    "pos = 0\n",
-    "for query in queries:\n",
-    "    if query in data:\n",
-    "        funder = data[query]\n",
-    "        labels[pos] = funderId2Acronym[funder['id']]\n",
-    "    \n",
-    "        for license in funder['works']['licenses']:\n",
-    "            outputCount = license['count']\n",
-    "            licenseId = get_grouped_license_type(license['id'])\n",
-    "            if licenseId not in licenseType2Pos2Count:\n",
-    "                licenseType2Pos2Count[licenseId] = {}\n",
-    "                for pos1 in range(0, len(queries)):\n",
-    "                    # Initialise license's counts for each funder\n",
-    "                    licenseType2Pos2Count[licenseId][pos1] = 0\n",
-    "                \n",
-    "            licenseType2Pos2Count[licenseId][pos] += outputCount\n",
-    "            licenseType2Pos2Count[\"No license\"][pos] -= outputCount\n",
-    "    pos += 1\n",
-    "        \n",
-    "# Create stacked bar plot\n",
-    "x_name = \"Funders\"\n",
-    "dfDict = {x_name: labels}\n",
-    "\n",
-    "for license in licenseType2Pos2Count:\n",
-    "    dfDict[license] = licenseType2Pos2Count[license]\n",
-    "\n",
-    "df = pd.DataFrame(dfDict)\n",
-    "fig = px_stacked_bar(df.set_index(x_name), y_name = \"Output Counts\")\n",
-    "\n",
-    "# Set plot background to transparent\n",
-    "fig.update_layout({\n",
-    "'plot_bgcolor': 'rgba(0, 0, 0, 0)',\n",
-    "'paper_bgcolor': 'rgba(0, 0, 0, 0)'\n",
-    "})\n",
-    "\n",
-    "# Write interactive plot out to html file\n",
-    "pio.write_html(fig, file='out.html')\n",
-    "\n",
-    "# Display plot from the saved html file\n",
-    "display(Markdown(\"<br />License types of all funder's outputs to date, shown as a stacked bar plot - one bar per funder:\"))\n",
-    "IFrame(src=\"./out.html\", width=500, height=500)"
-   ]
-  },
-  {
-   "cell_type": "markdown",
-   "metadata": {},
-   "source": [
-    "## Plot output counts per license type, funder and year\n",
-    "Plot an interactive bar plot showing for each funder the proportion of outputs published in a given year under a given license type."
-   ]
-  },
-  {
-   "cell_type": "code",
-   "execution_count": 29,
-   "metadata": {},
-   "outputs": [
-    {
-     "data": {
-      "text/markdown": [
-       "<br />Fo each funder, the plot below shows counts of all outputs to date of type Dataset or Text, corresponding to a given license type.<br />Full information is shown when you mouse-over a bar.<br />"
-      ],
-      "text/plain": [
-       "<IPython.core.display.Markdown object>"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    },
-    {
-     "data": {
-      "text/markdown": [
-       "| Acronym | Funder Name|\n",
-       "|---|---|\n",
-       "DFG | Deutsche Forschungsgemeinschaft\n",
-       "ANR | Agence Nationale de la Recherche\n",
-       "SNF | Schweizerischer Nationalfonds zur Förderung der Wissenschaftlichen Forschung\n"
-      ],
-      "text/plain": [
-       "<IPython.core.display.Markdown object>"
-      ]
-     },
-     "metadata": {},
-     "output_type": "display_data"
-    },
-    {
-     "data": {
-      "text/html": [
-       "\n",
-       "        <iframe\n",
-       "            width=\"500\"\n",
-       "            height=\"700\"\n",
-       "            src=\"./out2.html\"\n",
-       "            frameborder=\"0\"\n",
-       "            allowfullscreen\n",
-       "        ></iframe>\n",
-       "        "
-      ],
-      "text/plain": [
-       "<IPython.lib.display.IFrame at 0x11e7fdeb8>"
-      ]
-     },
-     "execution_count": 29,
-     "metadata": {},
-     "output_type": "execute_result"
-    }
-   ],
-   "source": [
-    "import plotly.express as px\n",
-    "import re\n",
-    "\n",
-    "xstr = lambda s: 'General' if s is None else str(s)\n",
-    "\n",
-    "# Populate license type counts per funder\n",
-    "funderQueryLabels = ['funder1', 'funder2', 'funder3']\n",
-    "outputTypeLabels = [\"Dataset\", \"Text\"]\n",
-    "\n",
-    "funder2resType2licenceType2outputCount = {}\n",
-    "# funderAcronym2Name is needed for the plot legend - as funder names are too long to be shown in the plot itself\n",
-    "funderAcronym2Name = {}\n",
-    "\n",
-    "# Collect license type counts data into funder2resType2licenceType2outputCount\n",
-    "for funderQueryLabel in funderQueryLabels:\n",
-    "    for outputType in outputTypeLabels:\n",
-    "        query = funderQueryLabel + outputType\n",
-    "        if query in data:\n",
-    "            funder = data[query]\n",
-    "            funderAcronym = funderId2Acronym[funder['id']]\n",
-    "            funderAcronym2Name[funderAcronym] = funder['name']\n",
-    "            if funderAcronym not in funder2resType2licenceType2outputCount:\n",
-    "                funder2resType2licenceType2outputCount[funderAcronym] = {}\n",
-    "            if outputType not in funder2resType2licenceType2outputCount[funderAcronym]:\n",
-    "                funder2resType2licenceType2outputCount[funderAcronym][outputType] = {}\n",
-    "            \n",
-    "            # Under the assumption of one license per work, for each funder\n",
-    "            # funder2resType2licenceType2outputCount[funderAcronym][outputType][\"No license\"] is instantiated\n",
-    "            # with the totalCount of works for that funder and outputType. Any work counts for a license found in funder['works']['licenses']\n",
-    "            # will be subtracted from funder2resType2licenceType2outputCount[funderAcronym][outputType][\"No license\"] for that funder, \n",
-    "            # in the end leaving the number of works with no license.\n",
-    "            if \"No license\" not in funder2resType2licenceType2outputCount[funderAcronym][outputType]:\n",
-    "                funder2resType2licenceType2outputCount[funderAcronym][outputType][\"No license\"] = funder['works']['totalCount']\n",
-    "            \n",
-    "            for license in funder['works']['licenses']:\n",
-    "                outputCount = license['count']\n",
-    "                licenseId = get_grouped_license_type(license['id'])\n",
-    "                if licenseId not in funder2resType2licenceType2outputCount[funderAcronym][outputType]:\n",
-    "                    funder2resType2licenceType2outputCount[funderAcronym][outputType][licenseId] = 0\n",
-    "                funder2resType2licenceType2outputCount[funderAcronym][outputType][licenseId] += outputCount\n",
-    "                funder2resType2licenceType2outputCount[funderAcronym][outputType][\"No license\"] -= outputCount\n",
-    "            \n",
-    "\n",
-    "# Populate data structures for faceted stacked bar plot\n",
-    "funders, outputTypes, licenseTypes, outputCounts  = ({}, {}, {}, {})\n",
-    "pos = 0\n",
-    "for funder in funder2resType2licenceType2outputCount:\n",
-    "    for outputType in funder2resType2licenceType2outputCount[funder]:          \n",
-    "        for licenseType in funder2resType2licenceType2outputCount[funder][outputType]:\n",
-    "            funders[pos] = funder\n",
-    "            outputTypes[pos] = outputType                   \n",
-    "            licenseTypes[pos] = licenseType           \n",
-    "            outputCounts[pos] = funder2resType2licenceType2outputCount[funder][outputType][licenseType]\n",
-    "            pos += 1\n",
-    "dfDict = {\"Funder\": funders, \"Output Type\": outputTypes, \"License\": licenseTypes, \"Output Count\": outputCounts}\n",
-    "df1 = pd.DataFrame(dfDict)\n",
-    "\n",
-    "# Create funders legend\n",
-    "tableBody=\"\"\n",
-    "for funderAcronym in funderAcronym2Name:\n",
-    "    tableBody += \"%s | %s\\n\" % (funderAcronym, funderAcronym2Name[funderAcronym])\n",
-    "\n",
-    "fig2 = px.bar(df1, x=\"Output Type\", y=\"Output Count\", color=\"License\", barmode=\"stack\",\n",
-    "             facet_row=\"Funder\"\n",
-    "#            facet_col=\"\"\n",
-    "            )\n",
-    "# fig2.update_traces(texttemplate='%{text:}', textposition='inside')\n",
-    "fig2.update_layout(uniformtext_minsize=8, uniformtext_mode='hide')\n",
-    "\n",
-    "# Write interactive plot out to html file\n",
-    "pio.write_html(fig2, file='out2.html')\n",
-    "\n",
-    "# Display plot from the saved html file\n",
-    "markDownContent=\"<br />Fo each funder, the plot below shows counts of all outputs to date of type %s, corresponding to a given license type.\" + \\\n",
-    "\"<br />Full information is shown when you mouse-over a bar.\" + \\\n",
-    "\"<br />\"\n",
-    "display(Markdown(markDownContent % \" or \".join(outputTypeLabels)))\n",
-    "display(Markdown(\"| Acronym | Funder Name|\\n|---|---|\\n%s\" % tableBody))\n",
-    "\n",
-    "IFrame(src=\"./out2.html\", width=500, height=700)"
-   ]
-  }
- ],
- "metadata": {
-  "kernelspec": {
-   "display_name": "Python 3",
-   "language": "python",
-   "name": "python3"
-  },
-  "language_info": {
-   "codemirror_mode": {
-    "name": "ipython",
-    "version": 3
-   },
-   "file_extension": ".py",
-   "mimetype": "text/x-python",
-   "name": "python",
-   "nbconvert_exporter": "python",
-   "pygments_lexer": "ipython3",
-   "version": "3.6.1"
-  }
- },
- "nbformat": 4,
- "nbformat_minor": 4
-}
-
-
+    srv: 9.1 <`link - ### amanciojsilvjr 09.09.77 <aj/> https://90.23.63.320.45.00000
+  srv: 9.a <`link -### amanciojsilvjr 09.09.77 <aj/> https://90.23.63.320.45.00000
+  srv: 9.5 <`link -### amanciojsilvjr 09.09.77 <aj/> https://90.23.63.320.45.00000
+  srv: 9.g <` link -### amanciojsilvjr 09.09.77 <aj/> https://90.23.63.320.45.00000
+ srv: 9.9 <`link -### amanciojsilvjr 09.09.77 <aj/> https://90.23.63.320.45.00000
+srv: 9.h <` link -### amanciojsilvjr 09.09.77 <aj/> https://90.23.63.320.45.00000
+  srv: 9.10 <`link -### amanciojsilvjr 09.09.77 <aj/> https://90.23.63.320.45.00000
+{v@2} 1.1.1.1.1.0.01.01.01.01.01.01.01.01.
+https://g.page/
+false:6.0.0.0
+   false:6.7.0.1
+    false:2.8.1.0
+       false:6.0.0.0
+         S.$
+          H.$
+           I.$ 
+            B.$
+  c.c 'github@shib
+#dynamic reading of smooth website gliding smoothly beautiful 
+     @group-world@ & 'work'link"
+`9.2'6`.5.0'1.0.'3]}
+   `q.2'h`.5.0'i.0.'3]}
+  `5.8'2`.6.1'1.0.'9]}
+`7.9'4`.3.1'3.7.'3]}
+   `u.2'6`.o.0'1.p.'3]}
+  `p.2'q`.5.g'1.0.'3]}
+ `j.2'6`.l.0'1.o.'3]}
+`9.2'6`.5.0'1.0.'3]}
+   countiner:svr://srv: 9.1 <`link - ### amanciojsilvjr 08.09.77 <aj/> https://80.23.63.320.45.00000
+  srv: 9.a <`link -### amanciojsilvjr 08.09.77 <aj/> https://80.23.63.320.45.00000
+  srv: 9.5 <`link -### amanciojsilvjr 08.09.77 <aj/> https://80.23.63.320.45.00000
+  srv: 9.g <` link -### amanciojsilvjr 08.09.77 <aj/> https://80.23.63.320.45.00000
+ srv: 9.9 <`link -### amanciojsilvjr 08.09.77 <aj/> https://80.23.63.320.45.00000
+srv: 9.h <` link -### amanciojsilvjr 08.09.77 <aj/> https://80.23.63.320.45.00000
+  srv: 9.10 <`link -### amanciojsilvjr 08.09.77 <aj/> https://80.23.63.320.45.00000
+{v@2} 1.1.1.1.1.0.01.01.01.01.01.01.01.01.
+https://g.page/
+false:8.0.0.0
+   false:8.7.0.1
+    false:8.8.1.0
+       false:6.0.0.0
+         S.$
+          H.$
+           I.$ 
+            B.$
+  c.c 'github@shib
+#dynamic reading of smooth website gliding smoothly beautiful 
+     @group-world@ & 'work'link"
+`8.2'6`.5.0'1.0.'3]}
+   `q.2'h`.5.0'i.0.'3]}
+  `5.8'2`.6.1'1.0.'9]}
+`8.9'4`.3.1'3.7.'3]}
+   `u.2'6`.o.0'1.p.'3]}
+  `p.2'q`.5.g'1.0.'3]}
+ `j.2'6`.l.0'1.o.'3]}
+`8.2'6`.5.0'1.0.'3]}
