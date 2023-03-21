@@ -1,0 +1,7 @@
+config.reload.automatic: to determine
+config.reload.interval: determined 
+http.host: https://shibatoken.com/
+pipeline.workers: 1
+# xpack.monitoring.elasticsearch.url: ${ES_HOST}
+# xpack.monitoring.enabled: true
+path.logs: /var/log/logstash
