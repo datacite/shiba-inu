@@ -1,0 +1,156 @@
+{
+  "index_patterns" :  ["resolutions*"],
+  "version" : 60001,
+  "settings" : {
+    "index.refresh_interval" : "5s",
+    "number_of_shards": 3
+  },
+  "mappings" : {
+    "_default_" : {
+      "properties" : {
+        "@timestamp": { "type": "date"},
+        "@version": { "type": "keyword"},
+        "doi" : { "type" : "keyword" },
+        "session" : { "type" : "keyword" },
+        "logdate" : { "type" : "date", "format": "yyyy-MM-dd||yyyy-MM||yyyy", "ignore_malformed": true },
+        "hour" : { "type" : "integer" },
+        "access_method": {
+          "type": "keyword",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "clientip": {
+          "type": "ip"
+        },
+        "handle": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "host": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "message": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "month": {
+          "type": "integer"
+        },
+        "occurred_at": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "server": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "tags": {
+          "type": "keyword",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "total_usage": {
+          "type": "keyword",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "ua": {
+          "properties": {
+            "build": {
+              "type": "keyword",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "device": {
+              "type": "keyword",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "name": {
+              "type": "keyword",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "os": {
+              "type": "keyword",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "os_name": {
+              "type": "keyword",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            }
+          }
+        },
+        "unique_usage": {
+          "type": "keyword",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        }
+      }
+    }
+  }
+}

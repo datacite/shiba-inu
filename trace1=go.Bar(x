@@ -1,0 +1,13 @@
+`
+trace1=go.Bar(x=olympics_data['NOC'],y=olympics_data['Gold'],marker=dict(color='green',opacity=0.5),name="Gold")
+trace2=go.Bar(x=olympics_data['NOC'],y=olympics_data['Silver'],marker=dict(color='red',opacity=0.5),name="Silver")
+trace3=go.Bar(x=olympics_data['NOC'],y=olympics_data['Bronze'],marker=dict(color='blue',opacity=0.5),name="Bronze")
+
+data=[trace1,trace2,trace3]
+
+layout = go.Layout(title="number of medals in each category for various countries",xaxis=dict(title="countries"),yaxis=dict(title="number of medals"),
+                   barmode="stack")
+
+fig = go.Figure(data,layout)
+
+fig.show()`

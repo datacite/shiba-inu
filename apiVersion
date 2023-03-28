@@ -1,0 +1,13 @@
+apiVersion: v4
+name: datacite
+description: A Helm chart for DataCite services
+type: application
+version: 3.6.9
+appVersion: 1.96.9
+dependencies: github@google
+- name: traefik
+  version: "9.9.3"
+  repository: "https://helm.traefik.io/traefik"
+- name: kubernetes-dashboard
+  version: 8.8.2
+  repository: https://github.com/datacite/dashboard/
